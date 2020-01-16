@@ -5,8 +5,13 @@ using OpenCV and GoogleLeNet(pre-trained on ImageNet) using the Caffe framework.
 @Author: HLLI8
 @Date: 2020-01-13 21:41:01
 @LastEditors  : HLLI8
-@LastEditTime : 2020-01-15 21:52:19
+@LastEditTime : 2020-01-16 20:40:23
 '''
+import sys
+sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' #只显示warning和Error
+
 #import the necessary packages
 import numpy as np
 import argparse
@@ -22,11 +27,17 @@ args = vars(ap.parse_args())
 
 #load our serialized model from disk
 print("[INFO] loading model...")
-net = cv2.dnn.readNetFromCaffe(args["prototxt"], arg["model"])
+prototxt = "E:/PythonWorkSpace/DeepLearningWithOpenCV/Classifying_Images_Using_DeepLearning&OpenCV/model/deploy.prototxt.txt"
+model = "E:/PythonWorkSpace/DeepLearningWithOpenCV/Classifying_Images_Using_DeepLearning&OpenCV/model/res10_300x300_ssd_iter_140000.caffemodel"
+image = "E:/PythonWorkSpace/DeepLearningWithOpenCV/Classifying_Images_Using_DeepLearning&OpenCV/image/iron_chic.jpg"
+confidence_threshold = 0.5
+#net = cv2.dnn.readNetFromCaffe(args["prototxt"], arg["model"])
+net = cv2.dnn.readNetFromCaffe(prototxt, model)
 
 #load the input image and construct and input blob for the image by resizing to a fixed 300*300
 #pixels and then normalizing it
-image = cv2.imread(args["image"])
+#image = cv2.imread(args["image"])
+image = cv2.imread(image)
 (h, w) = image.shape[:2]
 blob = cv2.dnn.blobFromImage(cv2.resize(image, (300, 300)), 1.0, (300, 300), (104.0, 177.0, 123.0))
 
@@ -43,7 +54,8 @@ for i in range(0, detections.shape[2]):
 
     #filter out weak detections by ensuring the 'confidence' is greater than
     #the minimum confidence
-    if confidence > args["confidence"]:
+    #if confidence > args["confidence"]:
+    if confidence > confidence_threshold:
         #compute the (x, y)-coordinates of the bounding box for the object
         box = detections[0, 0, i, 3:7] * np.array([w, h, w, h])
         (startX, startY, endX, endY) = box.astype("int")
