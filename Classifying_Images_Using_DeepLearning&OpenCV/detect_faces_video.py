@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-01-16 21:30:51
 @LastEditors  : HLLI8
-@LastEditTime : 2020-01-16 21:43:46
+@LastEditTime : 2020-01-17 22:14:55
 '''
 #import the necessary packages
 from imutils.video import VideoStream
@@ -30,9 +30,21 @@ print("[INFO] starting video stream....")
 vs = VideoStream(src=0).start()
 time.sleep(2.0)
 
+#loop over the frames from the video stream
+while True:
+    #grab the frame from the threaded video stream and resize it
+    #to have a maximum width of 400 pixels
+    frame = vs.read()
+    frame = imutils.resize(frame, width=400)
 
+    #grap the frame dimensions and convert it to a blob
+    (h, w) = frame.shape[:2]
+    blob = cv2.dnn.blobFromImage(cv2.resize(frame, (300, 300)), 1.0, (300, 300), (104.0, 177.0, 123.0))
 
-
+    #pass the blob through the network and obtain the detection and predictions
+    net.setInput(blob)
+    detection = net.forward()
+    
 
 
 
