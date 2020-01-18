@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-01-16 21:30:51
 @LastEditors  : HLLI8
-@LastEditTime : 2020-01-17 22:14:55
+@LastEditTime : 2020-01-18 20:30:07
 '''
 #import the necessary packages
 from imutils.video import VideoStream
@@ -43,7 +43,46 @@ while True:
 
     #pass the blob through the network and obtain the detection and predictions
     net.setInput(blob)
-    detection = net.forward()
+    detections = net.forward()
+    
+    #loop over the detections
+    for i in range(0, detections.shape[2]):
+        #extract the confidence associated with the prediction
+        confidence = detections[0, 0, i, 2]
+
+        #filter out weak detections by ensuring the "confidence" is greater than the
+        #minimum confidence
+        if confidence < args["confidence"]:
+            continue
+
+        #conpute the (x, y)-coordinates of the bounding box for the
+        #object
+        box = detections[0, 0, i, 3:7] * np.array([w, h, w, h])
+        (startX, startY, endX, endY) = box.astype("int")
+
+        #draw the bounding box of the face along with the associated
+        #probability
+        text = "{:.2f}%".format(confidence * 100)
+        y = startY - 10 if startY - 10 > 10 else startY + 10
+        cv2.rectangle(frame, (startX, startY), (endX, endY),
+            (0, 0, 255), 2)
+        cv2.putText(frame, text, (startX, y), cv2.FONT_HERSHEY_SIMPLEX,
+            0.45, (0, 0, 255), 2)
+        
+        #show the output frame
+        cv2.imshow("Frame", frame)
+        key = cv2.waitKey(1) & 0xFF
+
+        #if the "q" key was pressed, break from the loop
+        if key == ord("q"):
+			break
+#do a bit of cleanup
+cv2.destroyAllWindows()
+vs.stop()
+
+
+
+
     
 
 
