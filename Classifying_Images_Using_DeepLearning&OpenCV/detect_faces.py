@@ -5,7 +5,7 @@ using OpenCV and GoogleLeNet(pre-trained on ImageNet) using the Caffe framework.
 @Author: HLLI8
 @Date: 2020-01-13 21:41:01
 @LastEditors  : HLLI8
-@LastEditTime : 2020-01-16 21:12:08
+@LastEditTime : 2020-01-27 11:38:09
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -39,7 +39,7 @@ net = cv2.dnn.readNetFromCaffe(prototxt, model)
 #image = cv2.imread(args["image"])
 image = cv2.imread(image)
 (h, w) = image.shape[:2]
-blob = cv2.dnn.blobFromImage(cv2.resize(image, (300, 300)), 1.0, (300, 300), (104.0, 177.0, 123.0))
+blob = cv2.dnn.blobFromImage(cv2.resize(image, (300, 300)), 1.0, (300, 300), (104.0, 177.0, 123.0)) #OpenCV提供两个函数促进图像预处理，用于深度学习分类
 
 #pass the blob through the network and obtain the detections and
 #predictions
