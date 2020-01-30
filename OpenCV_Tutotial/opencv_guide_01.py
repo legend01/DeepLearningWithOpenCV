@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-01-28 13:26:22
 @LastEditors  : HLLI8
-@LastEditTime : 2020-01-30 10:41:25
+@LastEditTime : 2020-01-30 10:49:01
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -23,7 +23,7 @@ print("width={}, height={}, depth={}".format(w, h, d))
 
 #display the image to our screen --we will need to click the window open by OpenCV and press a key on our keyboard to continue execution
 cv2.imshow("Image", image)
-cv2.waitKey(0)
+cv2.waitKey(0) #防止图像瞬间出现和消失
 
 
 
