@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-01-28 13:26:22
 @LastEditors  : HLLI8
-@LastEditTime : 2020-01-30 11:36:13
+@LastEditTime : 2020-01-30 11:50:03
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -35,6 +35,20 @@ print("R={}, G={}, B={}".format(R, G, B))
 roi = image[60:160, 320:420] #image[startY:endY, startX:endX]
 cv2.imshow("ROI", roi)
 cv2.waitKey(0)
+
+#resize the iamge to 200*200px, ignoring aspect ratio
+resized = cv2.resize(image, (200, 200))
+cv2.imshow("Fixed Resizeding", resized)
+cv2.waitKey(0)
+
+
+
+
+
+
+
+
+
 
 
 
