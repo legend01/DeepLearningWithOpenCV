@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-01-28 13:26:22
 @LastEditors  : HLLI8
-@LastEditTime : 2020-01-28 13:57:02
+@LastEditTime : 2020-01-30 10:41:25
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -17,7 +17,7 @@ import cv2
 
 #load the input image and show its dimensions, keeping in mind that images are represented as a multi-dimensions NumPy array
 #with shape no. rows(height) x no. colums (width) x no. channels (depth)
-image = cv2.imread("jp.png")
+image = cv2.imread("E:/PythonWorkSpace/DeepLearningWithOpenCV/OpenCV_Tutotial/image/jp.png")
 (h, w, d) = image.shape
 print("width={}, height={}, depth={}".format(w, h, d))
 
