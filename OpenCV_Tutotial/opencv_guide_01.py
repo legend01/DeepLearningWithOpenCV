@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-01-28 13:26:22
 @LastEditors  : HLLI8
-@LastEditTime : 2020-01-30 10:49:01
+@LastEditTime : 2020-01-30 11:04:38
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -26,6 +26,10 @@ cv2.imshow("Image", image)
 cv2.waitKey(0) #防止图像瞬间出现和消失
 
 
+#在OpenCV中，图像的颜色标准顺序是BGR
+#sccess the RGB pixel located at x=50, y=100, keeping in mind that OpenCV stores images in BGR order rather than RGB
+(B, G, R) = image[100, 50]
+print("R={}, G={}, B={}".format(R, G, B))
 
 
 
