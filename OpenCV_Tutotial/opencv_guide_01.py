@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-01-28 13:26:22
 @LastEditors  : HLLI8
-@LastEditTime : 2020-01-30 12:02:12
+@LastEditTime : 2020-02-05 21:05:34
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -41,9 +41,10 @@ resized = cv2.resize(image, (200, 200))
 cv2.imshow("Fixed Resizeding", resized)
 cv2.waitKey(0)
 
+#计算原始图像的纵横比，并使用它来调整图像的大小，使其不会出现扭曲
 #fixed resizing and distort aspect ratio so let`s resize the width to be 300px but compute the new height based on the aspect ratio
-r = 300.0/w
-dim = (300, int(h * r))
+r = 300.0/w #calculate the ratio of the new width to the old width
+dim = (300, int(h * r)) #dimension is (width radio, height radio)
 resized = cv2.resize(image, dim)
 cv2.imshow("Aspect Ratio Resized", resized)
 cv2.waitKey(0)
