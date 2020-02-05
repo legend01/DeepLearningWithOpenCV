@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-01-28 13:26:22
 @LastEditors  : HLLI8
-@LastEditTime : 2020-02-05 21:44:36
+@LastEditTime : 2020-02-05 21:52:30
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -74,7 +74,10 @@ rotated = imutils.rotate_bound(image, 45)
 cv2.imshow("Imutils Bound Rotation", rotated)
 cv2.waitKey(0)
 
-
+#apply a Gaussian blur with a 11*11 kernel to the image to smooth it, useful when reducing high frequency noise
+blurred = cv2.GaussianBlur(image, (11, 11), 0)
+cv2.imshow("Blrred", blurred)
+cv2.waitKey(0)
 
 
 
