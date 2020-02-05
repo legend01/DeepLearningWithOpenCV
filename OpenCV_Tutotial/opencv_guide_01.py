@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-01-28 13:26:22
 @LastEditors  : HLLI8
-@LastEditTime : 2020-02-05 21:05:34
+@LastEditTime : 2020-02-05 21:14:34
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -49,6 +49,11 @@ resized = cv2.resize(image, dim)
 cv2.imshow("Aspect Ratio Resized", resized)
 cv2.waitKey(0)
 
+#manually computing the aspect ratio can be a pain so let`s use the
+#imutils library instead
+resized = imutils.resize(image, width=300)
+cv2.imshow("Imutils Resize", resized)
+cv2.waitKey(0)
 
 
 
