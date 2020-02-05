@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-01-28 13:26:22
 @LastEditors  : HLLI8
-@LastEditTime : 2020-02-05 21:37:42
+@LastEditTime : 2020-02-05 21:44:36
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -68,7 +68,11 @@ rotated = imutils.rotate(image, -45)
 cv2.imshow("Imutils Rotation", rotated)
 cv2.waitKey(0)
 
-
+#OpenCV doesn`t "care" if our rotated image is clipped after rotation
+#so we can instead use another imutils conventionce function to help us out
+rotated = imutils.rotate_bound(image, 45)
+cv2.imshow("Imutils Bound Rotation", rotated)
+cv2.waitKey(0)
 
 
 
