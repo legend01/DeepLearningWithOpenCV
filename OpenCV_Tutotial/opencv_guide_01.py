@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-01-28 13:26:22
 @LastEditors  : HLLI8
-@LastEditTime : 2020-02-05 21:34:16
+@LastEditTime : 2020-02-05 21:37:42
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -63,6 +63,10 @@ rotated = cv2.warpAffine(image, M, (w, h)) #(w, h)表示变换后的图片大小
 cv2.imshow("OpenCV Rotation", rotated)
 cv2.waitKey(0)
 
+#rotation can also be easily accomplished via imutils with less code
+rotated = imutils.rotate(image, -45)
+cv2.imshow("Imutils Rotation", rotated)
+cv2.waitKey(0)
 
 
 
