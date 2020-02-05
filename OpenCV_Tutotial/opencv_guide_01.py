@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-01-28 13:26:22
 @LastEditors  : HLLI8
-@LastEditTime : 2020-02-05 23:24:22
+@LastEditTime : 2020-02-05 23:30:08
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -91,7 +91,11 @@ cv2.circle(output, (300, 150), 20, (255, 0, 0), -1)
 cv2.imshow("Circle", output)
 cv2.waitKey(0)
 
-
+#draw a 5px thick red line from x=60, y=20 to x=400, y=200
+output = image.copy()
+cv2.line(output, (60, 20), (400, 200), (0, 0, 255), 5)
+cv2.imshow("Line", output)
+cv2.waitKey(0)
 
 
 
