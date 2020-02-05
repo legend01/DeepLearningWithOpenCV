@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-01-28 13:26:22
 @LastEditors  : HLLI8
-@LastEditTime : 2020-02-05 21:52:30
+@LastEditTime : 2020-02-05 23:17:49
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -79,8 +79,11 @@ blurred = cv2.GaussianBlur(image, (11, 11), 0)
 cv2.imshow("Blrred", blurred)
 cv2.waitKey(0)
 
-
-
+#draw a 2px thick red rectangle surrounding the face 
+output = image.copy()
+cv2.rectangle(output, (320, 60), (420, 160), (0, 0, 255), 2)
+cv2.imshow("Rectangle", output)
+cv2.waitKey(0)
 
 
 
