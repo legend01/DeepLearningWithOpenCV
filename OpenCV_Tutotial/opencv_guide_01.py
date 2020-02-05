@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-01-28 13:26:22
 @LastEditors  : HLLI8
-@LastEditTime : 2020-02-05 23:17:49
+@LastEditTime : 2020-02-05 23:24:22
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -80,13 +80,16 @@ cv2.imshow("Blrred", blurred)
 cv2.waitKey(0)
 
 #draw a 2px thick red rectangle surrounding the face 
-output = image.copy()
+output = image.copy() #复制图像，防止破坏原图像
 cv2.rectangle(output, (320, 60), (420, 160), (0, 0, 255), 2)
 cv2.imshow("Rectangle", output)
 cv2.waitKey(0)
 
-
-
+#draw a blue 20px (filled in) circle on the image centered at x=300, y=150
+output = image.copy()
+cv2.circle(output, (300, 150), 20, (255, 0, 0), -1)
+cv2.imshow("Circle", output)
+cv2.waitKey(0)
 
 
 
