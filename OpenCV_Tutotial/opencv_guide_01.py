@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-01-28 13:26:22
 @LastEditors  : HLLI8
-@LastEditTime : 2020-02-05 21:14:34
+@LastEditTime : 2020-02-05 21:34:16
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -51,8 +51,16 @@ cv2.waitKey(0)
 
 #manually computing the aspect ratio can be a pain so let`s use the
 #imutils library instead
-resized = imutils.resize(image, width=300)
+resized = imutils.resize(image, width=300) #利用OpenCV内部函数对图像尺寸进行放大或缩小
 cv2.imshow("Imutils Resize", resized)
+cv2.waitKey(0)
+
+#let`s rotate an image 45 degrees clockwise using OpenCV by first
+#computing the image center, then constructing the rotation matrix and then finally applying the affine warp
+center = (w // 2, h // 2) #计算图像中心点 无浮点中心点
+M = cv2.getRotationMatrix2D(center, -45, 1.0) #M表示仿射变化矩阵 1.0表示进行等比列的缩放
+rotated = cv2.warpAffine(image, M, (w, h)) #(w, h)表示变换后的图片大小
+cv2.imshow("OpenCV Rotation", rotated)
 cv2.waitKey(0)
 
 
