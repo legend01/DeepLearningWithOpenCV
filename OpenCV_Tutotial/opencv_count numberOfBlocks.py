@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-03-14 11:59:52
 @LastEditors: HLLI8
-@LastEditTime: 2020-03-14 15:25:36
+@LastEditTime: 2020-03-14 15:45:04
 '''
 """ 
 @TODO: 1.利用OpenCV将图像转换为灰度
@@ -73,7 +73,11 @@ for c in cnts:
     cv2.imshow("Conrours", output)
     cv2.waitKey(0)
 
-
+#draw the total number of contours found in purple
+text = "I found {} objects!".format(len(cnts))
+cv2.putText(output, text, (5, 25), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (240, 0, 159), 2)
+cv2.imshow("Contours", output)
+cv2.waitKey(0)
 
 
 
