@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-03-14 11:59:52
 @LastEditors: HLLI8
-@LastEditTime: 2020-03-14 15:52:15
+@LastEditTime: 2020-03-14 15:56:08
 '''
 """ 
 @TODO: 1.利用OpenCV将图像转换为灰度
@@ -85,8 +85,11 @@ mask = cv2.erode(mask, None, iterations=10)
 cv2.imshow("Eroded", mask)
 cv2.waitKey(0)
 
-
-
+#similarly, dilations can increase the size of the ground object
+mask = thresh.copy()
+mask = cv2.dilate(mask, None, iterations=5)
+cv2.imshow("Dilated", mask)
+cv2.waitKey(0)
 
 
 
