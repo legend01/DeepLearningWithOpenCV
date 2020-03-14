@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-03-14 11:59:52
 @LastEditors: HLLI8
-@LastEditTime: 2020-03-14 12:34:49
+@LastEditTime: 2020-03-14 12:44:52
 '''
 """ 
 @TODO: 1.利用OpenCV将图像转换为灰度
@@ -39,7 +39,22 @@ gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 cv2.imshow("GRAY", gray)
 cv2.waitKey(0)
 
-
+#applying edge detection we can find the outlines of objects in images
+'''
+@name: cv2.Canny()
+@brief: 检测图像的边缘
+@param: img --> 灰度图相关
+        minVal --> 最小的阈值， 30
+        maxVal --> 最大的阈值， 150
+        aperture_size --> 贝索尔内核大小 默认情况 3
+@return: 
+@note: 
+@Author: HLLI8
+@Date: 2020-03-14 12:41:41
+'''
+edged = cv2.Canny(gray, 30, 150)
+cv2.imshow("Edged", edged)
+cv2.waitKey(0)
 
 
 
