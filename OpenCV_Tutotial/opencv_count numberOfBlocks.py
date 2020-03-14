@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-03-14 11:59:52
 @LastEditors: HLLI8
-@LastEditTime: 2020-03-14 12:30:11
+@LastEditTime: 2020-03-14 12:34:49
 '''
 """ 
 @TODO: 1.利用OpenCV将图像转换为灰度
@@ -33,6 +33,11 @@ image = cv2.imread(imgpath)
 cv2.imshow("Image", image)
 cv2.waitKey(0)
 
+#convert the image to grayscale
+gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+cv2.imshow("GRAY", gray)
+cv2.waitKey(0)
 
 
 
