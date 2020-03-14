@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-03-14 11:59:52
 @LastEditors: HLLI8
-@LastEditTime: 2020-03-14 15:45:04
+@LastEditTime: 2020-03-14 15:52:15
 '''
 """ 
 @TODO: 1.利用OpenCV将图像转换为灰度
@@ -79,6 +79,11 @@ cv2.putText(output, text, (5, 25), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (240, 0, 159),
 cv2.imshow("Contours", output)
 cv2.waitKey(0)
 
+#we apply erosions to reduce the size of foreground objects
+mask = thresh.copy()
+mask = cv2.erode(mask, None, iterations=10)
+cv2.imshow("Eroded", mask)
+cv2.waitKey(0)
 
 
 
