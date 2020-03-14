@@ -1,0 +1,8 @@
+{
+    "python.testing.pytestArgs": [
+        "OpenCV_Tutotial"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.nosetestsEnabled": false,
+    "python.testing.pytestEnabled": true
+}

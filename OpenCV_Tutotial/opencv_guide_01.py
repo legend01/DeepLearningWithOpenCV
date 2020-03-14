@@ -3,8 +3,8 @@
 @version: 
 @Author: HLLI8
 @Date: 2020-01-28 13:26:22
-@LastEditors  : HLLI8
-@LastEditTime : 2020-02-05 23:30:08
+@LastEditors: HLLI8
+@LastEditTime: 2020-03-14 11:51:02
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -81,12 +81,38 @@ cv2.waitKey(0)
 
 #draw a 2px thick red rectangle surrounding the face 
 output = image.copy() #复制图像，防止破坏原图像
+'''
+@name: cv2.rectangle()
+@brief: 在图像中画方框
+@param：img  --> The destination image to draw upon. We`re drawing on output.
+        pt1 --> Our starting pixel -- top-left pixel is located at (320, 60).
+        pt2 --> The ending pixel -- bottom-right. The bottom-right pixel si located at (420, 160).
+        color --> BGR tuple. To represent red, I`ve supplied (0, 0, 255)
+        thickness --> Line thickness(a vegative value will make a solid rectangle). I`ve supplied a thickness of 2.
+@return: 
+@note: 
+@Author: HLLI8
+@Date: 2020-03-14 11:45:32
+'''
 cv2.rectangle(output, (320, 60), (420, 160), (0, 0, 255), 2)
 cv2.imshow("Rectangle", output)
 cv2.waitKey(0)
 
 #draw a blue 20px (filled in) circle on the image centered at x=300, y=150
 output = image.copy()
+'''
+@name: cv2.circle()
+@brief: 在图像中画圆
+@param img --> The output image
+        center --> out circle`s center coordinate. I supplied (300, 150) which is right in front of Ellie`s eyes.
+        radius --> The circle radius in pixels. I provided a value of 20 pixels.
+        color  --> Circle color. This time I went with blue as is denoted by 255 in the B and Os in the G+R components of the RGB tuple, (255, 0, 0)
+        thickness --> The line thickness. Since I supplied a nagative value(-1), the circle is solid/filled in.
+@return: 
+@note: 
+@Author: HLLI8
+@Date: 2020-03-14 11:36:12
+'''
 cv2.circle(output, (300, 150), 20, (255, 0, 0), -1)
 cv2.imshow("Circle", output)
 cv2.waitKey(0)
@@ -96,6 +122,30 @@ output = image.copy()
 cv2.line(output, (60, 20), (400, 200), (0, 0, 255), 5)
 cv2.imshow("Line", output)
 cv2.waitKey(0)
+
+#draw green text on the image
+output = image.copy()
+'''
+@name: cv2.putText()
+@brief: 在图像中写文字
+@param img  --> The output image
+        text --> The string of text we`d like to write/draw on the image
+        pt   --> The starting point for the text
+        font --> I often use the cv2.FONT_HERSHEY_SIMPLEX 
+        scale --> Font size multiplier
+        color --> Text color
+        thickness --> The thickness of the stroke in pixels
+@return: 
+@note: 
+@Author: HLLI8
+@Date: 2020-03-14 11:12:34
+'''
+cv2.putText(output, "OpenCV + Jurassic Park !!!", (10, 25), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+cv2.imshow("Text", output)
+cv2.waitKey(0)
+
+
+
 
 
 
