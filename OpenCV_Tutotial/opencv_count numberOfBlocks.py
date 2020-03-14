@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-03-14 11:59:52
 @LastEditors: HLLI8
-@LastEditTime: 2020-03-14 15:56:08
+@LastEditTime: 2020-03-14 16:02:54
 '''
 """ 
 @TODO: 1.利用OpenCV将图像转换为灰度
@@ -91,8 +91,11 @@ mask = cv2.dilate(mask, None, iterations=5)
 cv2.imshow("Dilated", mask)
 cv2.waitKey(0)
 
-
-
+#a typical operation we may want to apply is to take our mask and apply a bitwise AND to our input aimge, keeping only the masked regions
+mask = thresh.copy()
+output = cv2.bitwise_and(image, image, mask=mask)
+cv2.imshow("Output", output)
+cv2.waitKey(0)
 
 
 
