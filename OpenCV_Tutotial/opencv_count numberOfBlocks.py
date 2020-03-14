@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-03-14 11:59:52
 @LastEditors: HLLI8
-@LastEditTime: 2020-03-14 12:27:05
+@LastEditTime: 2020-03-14 12:30:11
 '''
 """ 
 @TODO: 1.利用OpenCV将图像转换为灰度
@@ -28,7 +28,8 @@ ap.add_argument("-i", "--image", required=False, help="path to input image")
 #args = vars(ap.parse_args())
 imgpath = "E:/PythonWorkSpace/DeepLearningWithOpenCV/OpenCV_Tutotial/image/tetris_blocks.png"
 
-image = cv2.imread(args["image"])
+#image = cv2.imread(args["image"])
+image = cv2.imread(imgpath)
 cv2.imshow("Image", image)
 cv2.waitKey(0)
 
