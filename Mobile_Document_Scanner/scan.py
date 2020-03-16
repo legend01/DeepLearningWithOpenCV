@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-03-14 17:27:41
 @LastEditors: HLLI8
-@LastEditTime: 2020-03-16 16:57:49
+@LastEditTime: 2020-03-16 17:32:37
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -21,7 +21,7 @@ import imutils
 ap = argparse.ArgumentParser()
 ap.add_argument("-i", "--image", required=False, help="Path to the image to be scanned")
 args = vars(ap.parse_args())
-image_path = "E:/PythonWorkSpace/DeepLearningWithOpenCV/Mobile_Document_Scanner/image/page.jpg"
+image_path = "E:/PythonWorkSpace/DeepLearningWithOpenCV/Mobile_Document_Scanner/image/receipt.jpg"
 #load the image and compute the ratio of the old height to the new height, clone it, and resize it
 #image = cv2.imread(args["image"])
 image = cv2.imread(image_path)
@@ -63,3 +63,17 @@ cv2.drawContours(image, [screenCnt], -1, (0, 255, 0), 2)
 cv2.imshow("Outline", image)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
+
+#apply the four point transform to obtain a top-down view of the original image
+warped = four_point_transform(orig, screenCnt.reshape(4, 2)*ratio)
+
+#转换映射的图片为灰色，使其成为灰白效果
+warped = cv2.cvtColor(warped, cv2.COLOR_BGR2GRAY)
+T = threshold_local(warped, 11, offset=10, method="gaussian")
+warped = (warped > T).astype("uint8") * 255
+
+#显示原始和扫描的图片
+print("STEP 3: Apply perspective transform")
+cv2.imshow("Original Image", imutils.resize(orig, height = 650))
+cv2.imshow("Scanned Image", imutils.resize(warped, height = 650))
+cv2.waitKey(0)
