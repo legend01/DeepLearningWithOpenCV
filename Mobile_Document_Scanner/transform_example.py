@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-03-16 14:58:08
 @LastEditors: HLLI8
-@LastEditTime: 2020-03-16 15:15:06
+@LastEditTime: 2020-03-16 15:17:07
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -27,4 +27,11 @@ args = vars(ap.parse_args())
 image = cv2.imread(args["image"])
 pts = np.array(eval(args["coords"]), dtype="float32")
 
+#apply the four point transform to obtrain a "birds eye view" of the image
+werped = four_point_transform(image, pts)
+
+#show the orginal and warped images
+cv2.imshow("Original Image", image)
+cv2.imshow("Warped Image", werped)
+cv2.waitKey(0)
 
