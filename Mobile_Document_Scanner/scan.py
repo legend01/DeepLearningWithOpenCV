@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-03-14 17:27:41
 @LastEditors: HLLI8
-@LastEditTime: 2020-03-16 15:00:05
+@LastEditTime: 2020-03-16 15:37:06
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -17,4 +17,8 @@ import numpy as np
 import argparse
 import cv2
 import imutils
+
+ap = argparse.ArgumentParser()
+ap.add_argument("-i", "--image", required=True, help="Path to the image to be scanned")
+args = vars(ap.parse_args())
 
