@@ -1,6 +1,3 @@
-# USAGE
-# python scan.py --image images/page.jpg
-
 # import the necessary packages
 from pyimagesearch.transform import four_point_transform
 from skimage.filters import threshold_local
