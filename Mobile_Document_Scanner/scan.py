@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-03-14 17:27:41
 @LastEditors: HLLI8
-@LastEditTime: 2020-03-16 16:44:07
+@LastEditTime: 2020-03-16 16:57:49
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -21,7 +21,7 @@ import imutils
 ap = argparse.ArgumentParser()
 ap.add_argument("-i", "--image", required=False, help="Path to the image to be scanned")
 args = vars(ap.parse_args())
-image_path = "E:/PythonWorkSpace/DeepLearningWithOpenCV/Mobile_Document_Scanner/image/receipt.jpg"
+image_path = "E:/PythonWorkSpace/DeepLearningWithOpenCV/Mobile_Document_Scanner/image/page.jpg"
 #load the image and compute the ratio of the old height to the new height, clone it, and resize it
 #image = cv2.imread(args["image"])
 image = cv2.imread(image_path)
@@ -44,7 +44,7 @@ cv2.destroyAllWindows()
 #find the contours in the edged image, keeping only the largest ones, and initialize the screen contour
 cnts = cv2.findContours(edged.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
 cnts = imutils.grab_contours(cnts)
-cnts = sorted(cnts, key=cv2.contourArea, reverse=True)[:5]
+cnts = sorted(cnts, key=cv2.contourArea, reverse=True)[:5] #检测最大的边缘
 
 #loop over the contours
 for c in cnts:
