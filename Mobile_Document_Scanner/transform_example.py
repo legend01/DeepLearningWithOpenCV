@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-03-16 14:58:08
 @LastEditors: HLLI8
-@LastEditTime: 2020-03-16 15:17:07
+@LastEditTime: 2020-03-16 15:27:39
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -20,13 +20,15 @@ ap = argparse.ArgumentParser()
 ap.add_argument("-i", "--image", help="path to the image file")
 ap.add_argument("-c", "--coords", help="comma seperated list of source points")
 args = vars(ap.parse_args())
-
+img_path = "E:/PythonWorkSpace/DeepLearningWithOpenCV/Mobile_Document_Scanner/Week03Code/document-scanner/images/page.jpg"
+four_cordinate = "[(101, 185), (393, 151), (479, 323), (187, 441)]"
 #加载图片并且抓取源地址
 #NOTE：using the 'eval' function is bad form, but for this example let`s just roll with it
 #in future posts I`ll show you how to automatically determine the coordinates without pre-supplying them
-image = cv2.imread(args["image"])
-pts = np.array(eval(args["coords"]), dtype="float32")
-
+#image = cv2.imread(args["image"])
+image = cv2.imread(img_path)
+#pts = np.array(eval(args["coords"]), dtype="float32")
+pts = np.array(eval(four_cordinate), dtype="float32")
 #apply the four point transform to obtrain a "birds eye view" of the image
 werped = four_point_transform(image, pts)
 
