@@ -1,6 +1,6 @@
 {
     "python.testing.pytestArgs": [
-        "OpenCV_Tutotial"
+        "Classifying_Images_Using_DeepLearning&OpenCV"
     ],
     "python.testing.unittestEnabled": false,
     "python.testing.nosetestsEnabled": false,

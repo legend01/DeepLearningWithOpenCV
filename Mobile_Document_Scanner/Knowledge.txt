@@ -27,3 +27,11 @@ cv2.warpPerspective
     第一个参数：源图像
     第二个参数：变换矩阵
     第三个参数：变换后尺寸(先列后行)
+
+3.Knowledge03
+@name: cv2.Canny()
+@brief: 检测图像的边缘
+@param: img --> 灰度图相关
+        minVal --> 最小的阈值， 30
+        maxVal --> 最大的阈值， 150
+        aperture_size --> 贝索尔内核大小 默认情况 3
