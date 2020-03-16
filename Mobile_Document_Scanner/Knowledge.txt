@@ -1,0 +1,29 @@
+1.Knowledge01
+01: np.diff 后面一个元素减去前面一个元素
+import numpy as np
+a=np.array([1, 6, 7, 8, 12])
+diff_x1 = np.diff(a)
+print("diff_x1",diff_x1)
+# diff_x1 [5 1 1 4]
+# [6-1,7-6,8-7,12-8]
+
+2.Knowledge02
+cv2.getPerspectiveTransform
+透视变换(Perspective Transformation)是将成像投影到一个新的视平面(Viewing Plane)，也称作投影映射(Projective Mapping)。
+如图1，通过透视变换ABC变换到A'B'C'。
+
+参数说明
+
+    src：源图像中待测矩形的四点坐标
+    sdt：目标图像中矩形的四点坐标
+
+返回由源图像中矩形到目标图像矩形变换的矩阵
+得到矩阵得有用才行啊
+所以引出下面这个函数
+
+3.Knowledge03
+cv2.warpPerspective
+参数说明：
+    第一个参数：源图像
+    第二个参数：变换矩阵
+    第三个参数：变换后尺寸(先列后行)
