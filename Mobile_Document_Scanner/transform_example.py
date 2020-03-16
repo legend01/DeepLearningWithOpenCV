@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-03-16 14:58:08
 @LastEditors: HLLI8
-@LastEditTime: 2020-03-16 15:08:31
+@LastEditTime: 2020-03-16 15:15:06
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -20,5 +20,11 @@ ap = argparse.ArgumentParser()
 ap.add_argument("-i", "--image", help="path to the image file")
 ap.add_argument("-c", "--coords", help="comma seperated list of source points")
 args = vars(ap.parse_args())
+
+#加载图片并且抓取源地址
+#NOTE：using the 'eval' function is bad form, but for this example let`s just roll with it
+#in future posts I`ll show you how to automatically determine the coordinates without pre-supplying them
+image = cv2.imread(args["image"])
+pts = np.array(eval(args["coords"]), dtype="float32")
 
 
