@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-03-19 19:08:59
 @LastEditors: HLLI8
-@LastEditTime: 2020-03-19 21:07:50
+@LastEditTime: 2020-03-19 21:47:20
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -19,18 +19,20 @@ import dlib
 import cv2
 
 ap = argparse.ArgumentParser()
-ap.add_augment("-P", "--shape-predictor", required=True, help="path to facial landmarks predictor")
-ap.add_argument("-i", "--image", required=True, help="path to input image")
+ap.add_argument("-P", "--shape-predictor", required=False, help="path to facial landmarks predictor")
+ap.add_argument("-i", "--image", required=False, help="path to input image")
 args = vars(ap.parse_args())
-
+predictor_path = "E:/PythonWorkSpace/DeepLearningWithOpenCV/Face_Landmask_Detection/Gradient_Descent_DS/shape_predictor_68_face_landmarks.dat"
+img_path = "E:/PythonWorkSpace/DeepLearningWithOpenCV/Face_Landmask_Detection/image/two_people.jpg"
 #initialize dlib`s face detector (HOG-based) and then create the facial landmarks predictor
 detector = dlib.get_frontal_face_detector()
-predictor = dlib.shape_predictor(args["shape_predictor"])
-
+#predictor = dlib.shape_predictor(args["shape_predictor"])
+predictor = dlib.shape_predictor(predictor_path)
 #load the input image, resize it, and convert it to grayscale
-image = cv2.imread(args["image"])
+#image = cv2.imread(args["image"])
+image = cv2.imread(img_path)
 image = imutils.resize(image, width=500)
-gray = cv2.cvtColor(image, cv2.Color_BGR2GRAY)
+gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
 #detector faces in the grayscale image
 ''' 
@@ -54,9 +56,10 @@ for (i, rect) in enumerate(rects):
 
     #循环(x, y)坐标为面部区域做标记
     for(x, y) in shape:
-        cv2.cicle(image, (x, y), 1, (0, 0, 255), -1)
+        cv2.circle(image, (x, y), 1, (0, 0, 255), -1)
     
 #展示面部检测 + 面部区域标记图片输出
 cv2.imshow("Output", image)
+cv2.imwrite("E:/PythonWorkSpace/DeepLearningWithOpenCV/Face_Landmask_Detection/save_imge/test.jpg",image)
 cv2.waitKey(0)
 
