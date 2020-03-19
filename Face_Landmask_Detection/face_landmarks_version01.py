@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-03-19 19:08:59
 @LastEditors: HLLI8
-@LastEditTime: 2020-03-19 19:17:10
+@LastEditTime: 2020-03-19 19:24:43
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -23,3 +23,6 @@ ap.add_augment("-P", "--shape-predictor", required=True, help="path to facial la
 ap.add_argument("-i", "--image", required=True, help="path to input image")
 args = vars(ap.parse_args())
 
+#initialize dlib`s face detector (HOG-based) and then create the facial landmarks predictor
+detector = dlib.get_frontal_face_detector()
+predictor = dlib.shape_predictor(args["shape_predictor"])
