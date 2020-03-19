@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-03-19 19:08:59
 @LastEditors: HLLI8
-@LastEditTime: 2020-03-19 19:24:43
+@LastEditTime: 2020-03-19 19:57:30
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -26,3 +26,11 @@ args = vars(ap.parse_args())
 #initialize dlib`s face detector (HOG-based) and then create the facial landmarks predictor
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor(args["shape_predictor"])
+
+#load the input image, resize it, and convert it to grayscale
+image = cv2.imread(args["image"])
+image = imutils.resize(image, width=500)
+gray = cv2.cvtColor(image, cv2.Color_BGR2GRAY)
+
+#detector faces in the grayscale image
+rects = detector(gray, 1)
