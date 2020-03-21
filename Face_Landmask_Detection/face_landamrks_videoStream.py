@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-03-20 15:41:47
 @LastEditors: HLLI8
-@LastEditTime: 2020-03-21 10:01:26
+@LastEditTime: 2020-03-21 10:03:56
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -33,7 +33,7 @@ def main():
     ap.add_argument("-p", "--shape-predictor", required=False, help="path to facial landmark prediction")
     predictor_path = "E:/PythonWorkSpace/DeepLearningWithOpenCV/Face_Landmask_Detection/Gradient_Descent_DS/shape_predictor_68_face_landmarks.dat"
     ap.add_argument("-i", "--image", required=False, default='0', help="path to input image")
-    image_path = "E:/PythonWorkSpace/DeepLearningWithOpenCV/Face_Landmask_Detection/image/two_people.jpg"
+    #image_path = "E:/PythonWorkSpace/DeepLearningWithOpenCV/Face_Landmask_Detection/image/two_people.jpg"
     args = vars(ap.parse_args())
 
     #初始化dlib人脸检测，创建面部标志预测器
@@ -41,14 +41,14 @@ def main():
     #predictor = dlib.shape_predictor(args["shape_predictor"])
     predictor = dlib.shape_predictor(predictor_path)
 
-    #if args['image'] != '0':
-    if image_path != ' ':
+    if args['image'] != '0':
+    #if image_path != ' ':
         #image = cv2.imread(args['image']) #输入图片实参读入图片
         image = cv2.imread(image_path)
     else: 
         image = takephoto() #若未输入则进行照相操作
     
-    image = imutils.rsize(image, width=500) #调整图片宽度500
+    image = imutils.resize(image, width=500) #调整图片宽度500
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) 
 
     #检测灰度图像中的面部
