@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-03-23 16:15:45
 @LastEditors: HLLI8
-@LastEditTime: 2020-03-23 16:24:21
+@LastEditTime: 2020-03-23 16:44:20
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -24,3 +24,9 @@ args = vars(ap.parse_args())
 
 #定义解答问题和正确答案的映射关系
 ANSWER_KEY = {0:1, 1:4, 2:0, 3:3, 4:1}
+
+#加载图片，灰度值化，轻微的模糊化，找边缘
+image = cv2.imread(args["image"])
+gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+blurred = cv2.GaussianBlur(gray, (5,5), 0)
+edged = cv2.Canny(blurred, 75, 200)
