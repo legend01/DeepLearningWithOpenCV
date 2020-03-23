@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-03-23 16:15:45
 @LastEditors: HLLI8
-@LastEditTime: 2020-03-23 17:10:02
+@LastEditTime: 2020-03-23 17:41:07
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -51,3 +51,7 @@ if len(cnts) > 0:
         if len(approx) == 4:
             docCnt = approx
             break
+
+#将四点透视变换应用于原始图像和灰度图像，得到自上而下的鸟眼视图
+paper = four_point_transform(image, docCnt.reshape(4, 2))
+warped = four_point_transform(gray, docCnt.reshape(4, 2))
