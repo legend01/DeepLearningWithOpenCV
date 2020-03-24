@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-03-23 16:15:45
 @LastEditors: HLLI8
-@LastEditTime: 2020-03-24 14:47:08
+@LastEditTime: 2020-03-24 19:28:46
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -19,7 +19,7 @@ import imutils
 import cv2
 
 ap = argparse.ArgumentParser()
-ap.add_argument("-i", "--image", required=True, help="path to the input image")
+ap.add_argument("-i", "--image", required=False, default="E:/PythonWorkSpace/DeepLearningWithOpenCV/Bubble_Sheet_Scanner/Week04Code/optical-mark-recognition/images/test_03.png", help="path to the input image")
 args = vars(ap.parse_args())
 
 #定义解答问题和正确答案的映射关系
@@ -32,7 +32,7 @@ blurred = cv2.GaussianBlur(gray, (5,5), 0)
 edged = cv2.Canny(blurred, 75, 200)
 
 #找到边缘轮廓，初始化文档的边缘
-cnts = cv2.findContours(edged.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_AIMPLE)
+cnts = cv2.findContours(edged.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 cnts = imutils.grab_contours(cnts)
 docCnt = None
 
@@ -44,7 +44,7 @@ if len(cnts) > 0:
     #loop over the sorted Contours
     for c in cnts:
         #估计边缘
-        preri = cv2.arcLength(c, True)
+        peri = cv2.arcLength(c, True)
         approx = cv2.approxPolyDP(c, 0.02*peri, True)
 
         #假设有四个点，就认为发现了paper
@@ -71,7 +71,7 @@ for c in cnts:
 
     #为了把轮廓标记为一个问题，区域应该足够宽，足够高，并且有一个大约等于1的纵横比 
     if w >= 20 and h >= 20 and ar >= 0.9 and ar <= 1.1:
-        quresionCnts.append(c)
+        questionCnts.append(c)
     
 #从上到下排序问题边缘，初始化整个问题的正确答案
 questionCnts = contours.sort_contours(questionCnts, method="top-to-bottom")[0]
@@ -109,7 +109,7 @@ for (q, i) in enumerate(np.arange(0, len(questionCnts), 5)):
 
 score = (correct / 5.0) * 100
 print("[INFO] score: {:.2f}%".format(score))
-cv2.putText(paper, "{:.2f}%".format(score), (10, 30), cv2.FONT_HRESHEY_SIMPLEX, 0.9, (0, 0, 255), 2)
+cv2.putText(paper, "{:.2f}%".format(score), (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 2)
 cv2.imshow("Original", image)
 cv2.imshow("Exam", paper)
 cv2.waitKey(0)
