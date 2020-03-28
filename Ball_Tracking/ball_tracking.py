@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-03-25 18:07:00
 @LastEditors: HLLI8
-@LastEditTime: 2020-03-28 17:39:09
+@LastEditTime: 2020-03-28 17:58:17
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -81,18 +81,18 @@ while True:
             cv2.circle(frame, (int(x), int(y)), int(radius), (0, 255, 255), 2) #围着检测的物体画圆
             cv2.circle(frame, center, 5, (0, 0, 255), -1) #画出质心
         
-    #update the points queue
+    #update the points queue 把质心添加到pts中，并且是添加到列表左侧
     pts.appendleft(center)  #遍历追踪点，分段画出轨迹 
     
-    #loop over the set of tracked points
+    #loop over the set of tracked points 遍历追踪点，分段画出轨迹
     for i in range(1, len(pts)):
         #if either of the tracked pints are None, ignore them
         if pts[i - 1] is None or pts[i] is None:
             continue
         
         #otherwise, compute the thickness of the line and draw the connecting lines
-        thickness = int(np.sqrt(args["buffer"] / float(i + 1)) * 2.5)
-        cv2.line(frame, pts[i - 1], pts[i], (0, 0, 255), thickness)
+        thickness = int(np.sqrt(args["buffer"] / float(i + 1)) * 2.5) #计算所画小线段的粗细
+        cv2.line(frame, pts[i - 1], pts[i], (0, 0, 255), thickness) #画出小线段 
 
     #show the frame to our screen
     cv2.imshow("Frame", frame)
