@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-03-25 18:07:00
 @LastEditors: HLLI8
-@LastEditTime: 2020-03-28 16:36:20
+@LastEditTime: 2020-03-28 17:39:09
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -25,8 +25,10 @@ ap.add_argument("-b", "--buffer", type=int, default=64, help="max buffer size")
 args = vars(ap.parse_args())
 
 #define the lower and upper boundaries of the "green" ball in the HSV color space, then initialize the list of tracked points
-greenLower = (29, 86, 6)
-greenUpper = (64, 255, 255)
+#greenLower = (29, 86, 6)
+#greenUpper = (64, 255, 255)
+greenLower = (170, 100, 100)
+greenUpper = (179, 255, 255)
 pts = deque(maxlen=args["buffer"])
 
 #if a video path was not supplied, grab the reference to the webcam
@@ -69,18 +71,18 @@ while True:
     if len(cnts) > 0:
         #find the largest contour int the mask, then use it to compute the minimum enclosing circle and centroid
         c = max(cnts, key=cv2.contourArea)
-        ((x, y), radius) = cv2.minEnclosingCircle(c)
+        ((x, y), radius) = cv2.minEnclosingCircle(c) #找到最小外接圆
         M = cv2.moments(c)
         center = (int(M["m10"]/M["m00"]), int(M["m01"]/M["m00"])) #计算图像的质心
 
         #only proceed if the radius meets a minimum size
-        if radius > 10:
+        if radius > 10: #如果找到轮廓的圆形大于10
             #draw the cicle and centroid on the frame, then update the list of tracked points
-            cv2.circle(frame, (int(x), int(y)), int(radius), (0, 255, 255), 2)
-            cv2.circle(frame, center, 5, (0, 0, 255), -1)
+            cv2.circle(frame, (int(x), int(y)), int(radius), (0, 255, 255), 2) #围着检测的物体画圆
+            cv2.circle(frame, center, 5, (0, 0, 255), -1) #画出质心
         
     #update the points queue
-    pts.appendleft(center)
+    pts.appendleft(center)  #遍历追踪点，分段画出轨迹 
     
     #loop over the set of tracked points
     for i in range(1, len(pts)):
