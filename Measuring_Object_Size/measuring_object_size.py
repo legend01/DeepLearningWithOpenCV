@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-04-01 14:55:24
 @LastEditors: HLLI8
-@LastEditTime: 2020-04-01 16:55:07
+@LastEditTime: 2020-04-02 09:08:29
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -44,3 +44,22 @@ cnts = imutils.grab_contours(cnts)
 # sort the contours from left-to-right and initialize the "pixels per metrix" calibration variable
 (cnts, _) = contours.sort_contours(cnts)
 pixelsPerMetric = None
+
+# 循环边缘
+for c in cnts:
+    # 若边缘不是足够的大，忽视
+    if cv2.contourArea(c) < 100:
+        continue
+
+    #计算边缘的包围边框
+    orig = image.copy()
+    box = cv2.minAreaRect(c)
+    box = cv2.cv.BoxPoints(box) if imutils.is_cv2() else cv2.boxPoints(box)
+    box = np.array(box, dtype="int")
+
+    box = perspective.order_points(box)
+    cv2.drawContours(orig, [box.astype("int")], -1, (0, 255, 0), 2)
+    
+    #loop over the iriginal points and draw them
+    for (x, y) in box:
+        cv2.circle(orig, (int(x), int(y)), 5, (0, 0, 255), -1)
