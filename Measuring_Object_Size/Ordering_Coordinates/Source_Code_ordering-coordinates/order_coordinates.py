@@ -1,5 +1,9 @@
 # import the necessary packages
 from __future__ import print_function
+import sys
+sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' #只显示warning和Error
 from imutils import perspective
 from imutils import contours
 import numpy as np
@@ -32,12 +36,13 @@ def order_points_old(pts):
 
 # construct the argument parse and parse the arguments
 ap = argparse.ArgumentParser()
-ap.add_argument("-n", "--new", type=int, default=-1,
+ap.add_argument("-n", "--new", type=int, default=3,
 	help="whether or not the new order points should should be used")
 args = vars(ap.parse_args())
+image_path = "E:/PythonWorkSpace/DeepLearningWithOpenCV/Measuring_Object_Size/Ordering_Coordinates/Source_Code_ordering-coordinates/example.png"
 
 # load our input image, convert it to grayscale, and blur it slightly
-image = cv2.imread("example.png")
+image = cv2.imread(image_path)
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 gray = cv2.GaussianBlur(gray, (7, 7), 0)
 

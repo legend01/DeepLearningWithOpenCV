@@ -53,3 +53,8 @@ X[:,0]是numpy中数组的一种写法，表示对一个二维数组，取该二
 [(0, 'Spring'), (1, 'Summer'), (2, 'Fall'), (3, 'Winter')]
 >>> list(enumerate(seasons, start=1))       # 下标从 1 开始
 [(1, 'Spring'), (2, 'Summer'), (3, 'Fall'), (4, 'Winter')]
+
+4.Knowledge04
+cv2.putText(img, str(i), (123,456)), font, 2, (0,255,0), 3)
+
+各参数依次是：图片，添加的文字，左上角坐标，字体，字体大小，颜色，字体粗细
