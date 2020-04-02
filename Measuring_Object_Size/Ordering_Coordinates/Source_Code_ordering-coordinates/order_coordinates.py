@@ -60,12 +60,12 @@ colors = ((0, 0, 255), (240, 0, 159), (255, 0, 0), (255, 255, 0))
 # loop over the contours individually
 for (i, c) in enumerate(cnts):
 	# if the contour is not sufficiently large, ignore it
-	if cv2.contourArea(c) < 100:
+	if cv2.contourArea(c) < 100: #计算轮廓面积
 		continue
 
 	# compute the rotated bounding box of the contour, then
 	# draw the contours
-	box = cv2.minAreaRect(c)
+	box = cv2.minAreaRect(c) #找到最小外接矩形 rect: 中心点坐标(x,y) (宽,高) 旋转角度
 	box = cv2.cv.BoxPoints(box) if imutils.is_cv2() else cv2.boxPoints(box)
 	box = np.array(box, dtype="int")
 	cv2.drawContours(image, [box], -1, (0, 255, 0), 2)
@@ -90,7 +90,7 @@ for (i, c) in enumerate(cnts):
 	print("")
 
 	# loop over the original points and draw them
-	for ((x, y), color) in zip(rect, colors):
+	for ((x, y), color) in zip(rect, colors): #给四个坐标点与颜色放在一起
 		cv2.circle(image, (int(x), int(y)), 5, color, -1)
 
 	# draw the object num at the top-left corner

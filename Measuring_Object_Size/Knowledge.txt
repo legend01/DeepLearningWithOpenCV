@@ -1,0 +1,55 @@
+1.Knowledge01
+numpy.argsort(a, axis=-1, kind=’quicksort’, order=None)
+
+功能: 将矩阵a按照axis排序，并返回排序后的下标
+参数: a:输入矩阵， axis:需要排序的维度
+返回值: 输出排序后的下标
+
+
+import numpy as np
+x = np.array([1,4,3,-1,6,9])
+x.argsort()
+# array([3, 0, 1, 2, 4, 5], dtype=int64)
+
+可以发现，argsort()是将X中的元素从小到大排序后，提取对应的索引index，然后输出到y
+如x[3]=-1最小，x[5]=9最大
+
+所以取数组x的最小值可以写成:
+1
+	
+x[x.argsort()[0]]
+
+或者用argmin()函数
+1
+	
+x[x.argmin()]
+
+ 
+数组x的最大值，写成：
+1
+	
+x[x.argsort()[-1]]  # -1代表从后往前反向的索引
+
+或者用argmax()函数,不再详述
+1
+	
+x[x.argmax()]
+
+ 输出排序后的数组
+
+ x[x.argsort()]
+# 或
+x[np.argsort(x)]
+
+2.Knowledge02
+X[:,0]是numpy中数组的一种写法，表示对一个二维数组，取该二维数组第一维中的所有数据，
+第二维中取第0个数据，
+直观来说，X[:,0]就是取所有行的第0个数据, X[:,1] 就是取所有行的第1个数据。
+
+3.Knowledge03
+--> enumerate()函数用法
+>>>seasons = ['Spring', 'Summer', 'Fall', 'Winter']
+>>> list(enumerate(seasons))
+[(0, 'Spring'), (1, 'Summer'), (2, 'Fall'), (3, 'Winter')]
+>>> list(enumerate(seasons, start=1))       # 下标从 1 开始
+[(1, 'Spring'), (2, 'Summer'), (3, 'Fall'), (4, 'Winter')]
