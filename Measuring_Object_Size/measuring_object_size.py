@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-04-01 14:55:24
 @LastEditors: HLLI8
-@LastEditTime: 2020-04-02 17:14:23
+@LastEditTime: 2020-04-02 17:28:24
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -82,4 +82,10 @@ for c in cnts:
     cv2.line(orig, (int(tltrX), int(tltrY)), (int(blbrX), int(blbrY)), (255, 0, 255), 2)
     cv2.line(orig, (int(tlblX), int(tlblY)), (int(trbrX), int(trbrY)), (255, 0, 255), 2)
 
+    #计算两个点之间的欧式距离
+    dA = dist.euclidean((tltrX, tltrY), (blbrX, blbrY)) 
+    dB = dist.euclidean((tlblX, tlblY), (trbrX, trbrY))
+
+    if pixelsPerMetric is None:
+        pixelsPerMetric = dB / args["width"]
         
