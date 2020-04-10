@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-04-01 14:55:24
 @LastEditors: HLLI8
-@LastEditTime: 2020-04-02 17:28:24
+@LastEditTime: 2020-04-10 16:55:53
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -88,4 +88,18 @@ for c in cnts:
 
     if pixelsPerMetric is None:
         pixelsPerMetric = dB / args["width"]
+        #pixelsPerMetric = dB / object_radio
+    #计算物体尺寸
+    dimA = dA/pixelsPerMetric
+    dimB = dB/pixelsPerMetric
+
+    #在图片中画出物体的尺寸
+    cv2.putText(orig, "{:.1f}in".format(dimA), (int(tltrX - 15), int(tltrY - 15)), cv2.FONT_HERSHEY_SIMPLEX,
+                0.65, (255, 255, 255), 2)
+    cv2.putText(orig, "{:.1f}in".format(dimB), (int(trbrX + 10), int(trbrY)), cv2.FONT_HERSHEY_SIMPLEX,
+                0.65, (255, 255, 255), 2)
+    
+    #展示图片
+    cv2.imshow("Image", orig)
+    cv2.waitKey(0)
         
