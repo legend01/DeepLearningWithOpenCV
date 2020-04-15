@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-04-15 10:36:18
 @LastEditors: HLLI8
-@LastEditTime: 2020-04-15 15:18:09
+@LastEditTime: 2020-04-15 15:41:06
 '''
 import matplotlib.pyplot as plt
 import numpy as np
@@ -28,7 +28,18 @@ class StepDecay(LearningRateDecay):
 
     def __call__(self, epoch):
         #计算当前迭代的学习率
-        exp np.floor((1+epoch)/self.dropEvery)
+        exp = np.floor((1+epoch)/self.dropEvery)
         alpha = self.initAlpha * (self.factor**exp)
         #返回学习率
+        return float(alpha)
+
+class PolynomialDecay(LearningRateDecay):
+    def __init__(self, maxEpochs=100, initAlpha=0.01, power=1.0):
+        self.maxEpochs = maxEpochs
+        self.initAlpha = initAlpha
+        self.power = power
+    
+    def __call__(self, epoch):
+        decay = self.(1-(epoch/float(self.maxEpochs)))**self.power
+        alpha = self.initAlpha * decay
         return float(alpha)
