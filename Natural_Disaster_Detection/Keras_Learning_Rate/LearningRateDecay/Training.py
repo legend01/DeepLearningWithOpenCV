@@ -1,4 +1,3 @@
-
 import matplotlib
 matplotlib.use("Agg")
 
@@ -41,3 +40,21 @@ if schedule is not None:
 
 print("[INFO] loading CIFAR-10 data...")
 ((trainX, trainY), (testX, testY)) = cifar10.load_data()
+trainX = trainX.astype("float")/255.0
+testX = testX.astype("float")/255.0
+
+lb = LabelBinarizer()
+trainY = lb.fit_transform(trainY)
+testY = lb.transform(testY)
+
+#在CIFAR-10数据集中初始化标签名
+labelNames = ["airplane", "automobile", "bird", "cat", "deer", "dog", "frog", "horse", "ship", "truck"]
+
+#初始化优化器和模型
+opt = SGD(lr=1e-1, momentum=0.9, decay=decay)
+modele = ResNet.build(32, 32, 3, 10, (9, 9, 9), (64, 64, 128, 256), reg=0.0005)
+model.compile(loss="categorical_crossentropy", optimizer=opt, metrics=["accuracy"])
+
+#训练网络
+H = model.fit(trainX, trainY, validation_data=(testX, testY), batch_size=128, epochs=epochs, callbacks=callbacks, verbose=1)
+
