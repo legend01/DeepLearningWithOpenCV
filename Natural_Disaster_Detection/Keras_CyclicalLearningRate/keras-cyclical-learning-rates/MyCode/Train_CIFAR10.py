@@ -27,8 +27,19 @@ testY = lb.transform(testY)
 
 aug = ImageDataGenerator(width_shift_range=0.1, height_shift_range=0.1, horizontal_flip=True, fill_mode="nearest")
 
-print
+print("[INFO] compiling model...")
+opt = SGD(lr=config.MIN_LR, momentum=0.9)
+model = MiniGoogLeNet.build(width=32, height=32, depth=32, classes=10)
 
+model.compile(loss="categorical_crossentropy", optimizer=opt, metrics=["accuracy"])
+
+print("[INFO] using '{}' method".format(config.CLR_METHOD))
+clr = CyclicLR(
+    mode = config.CLR_METHOD,
+    base_lr = config.MIN_LR,
+    max_lr = config.MAX_LR,
+    step_size = config.STEP_SIZE * (trainX.shape[0]//conifg.BATCH_SIZE)
+)
 
 
 
