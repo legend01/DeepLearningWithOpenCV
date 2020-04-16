@@ -41,6 +41,19 @@ clr = CyclicLR(
     step_size = config.STEP_SIZE * (trainX.shape[0]//conifg.BATCH_SIZE)
 )
 
+print("[INFO] traininig network....")
+H = model.fit_generator(
+    aug.flow(trainX, trainY, batch_size=config.BATCH_SIZE),
+    validation_data = (testX, testY), 
+    steps_per_epoch = trainX.shape[0],
+    epochs = config.NUM_EPOSHS, 
+    callbacks = [clr], 
+    verbose = 1
+)
+
+print("[INFO] evaluating network...")
+predictions = model.predict(testX, batch_size=config.BATCH_SIZE)
+print(classification_report(testY.argmax(axis=1), predictions.argumax(axis=1), target_names=config.CLASSES))
 
 
 
