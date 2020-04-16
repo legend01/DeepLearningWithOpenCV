@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-04-15 10:36:18
 @LastEditors: HLLI8
-@LastEditTime: 2020-04-15 15:41:06
+@LastEditTime: 2020-04-16 10:51:52
 '''
 import matplotlib.pyplot as plt
 import numpy as np
@@ -40,6 +40,6 @@ class PolynomialDecay(LearningRateDecay):
         self.power = power
     
     def __call__(self, epoch):
-        decay = self.(1-(epoch/float(self.maxEpochs)))**self.power
+        decay = (1-(epoch/float(self.maxEpochs)))**self.power
         alpha = self.initAlpha * decay
         return float(alpha)

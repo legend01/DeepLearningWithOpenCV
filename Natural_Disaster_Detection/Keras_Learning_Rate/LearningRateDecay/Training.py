@@ -6,8 +6,8 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' #只显示warning和Error
 import matplotlib
 matplotlib.use("Agg")
 
-from LearningRateDecay.learningRateScheduler import StepDecay
-from LearningRateDecay.learningRateScheduler import PolynomialDecay
+from learningRateScheduler import StepDecay
+from learningRateScheduler import PolynomialDecay
 from ResNet.resnet import ResNet
 from sklearn.preprocessing import LabelBinarizer
 from sklearn.metrics import classification_report
@@ -25,7 +25,7 @@ ap.add_argument("-l", "--lr-plot", type=str, default="lr.png", help="path to out
 ap.add_argument("-t", "--train-plot", type=str, default="train.png", help="path to output training plot")
 args = vars(ap.parse_args())
 
-epochs = args["epoch"]
+epochs = args["epochs"]
 callbacks = []
 schedule = None
 
