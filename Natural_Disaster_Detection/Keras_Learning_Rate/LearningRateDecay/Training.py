@@ -1,3 +1,8 @@
+import sys
+sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' #只显示warning和Error
+
 import matplotlib
 matplotlib.use("Agg")
 
@@ -57,4 +62,39 @@ model.compile(loss="categorical_crossentropy", optimizer=opt, metrics=["accuracy
 
 #训练网络
 H = model.fit(trainX, trainY, validation_data=(testX, testY), batch_size=128, epochs=epochs, callbacks=callbacks, verbose=1)
+
+#估计网络
+print("[INFO] evaluating netwark....")
+predictions = model.predict(testX, batch_size=128)
+print(classification_report(testY.argmax(axis=1), predictions.argmax(axis=1), target_names=labelNames))
+
+#绘制训练损失和精确度
+N = np.arange(0, args["epochs"])
+plt.style.use("ggplot")
+plt.figure()
+plt.plot(N, H.history["loss"], label="train_loss")
+plt.plot(N, H.history["val_loss"], label="val_loss")
+plt.plot(N, H.history["acc"], label="train_acc")
+plt.plot(N, H.history["val_acc"], label="val_acc")
+plt.title("Train Loss and Accuracy on CIFAR-10")
+plt.xlabel("Epoch #")
+plt.ylabel("Loss/Accuracy")
+plt.legen()
+plt.savefig(args["train_plot"])
+
+if schedule is not None:
+    schedule.plot(N)
+    plt.savefig(args["lr_plot"])
+
+
+
+
+
+
+
+
+
+
+
+
 
