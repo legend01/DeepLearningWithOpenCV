@@ -1,3 +1,11 @@
+'''
+@Description: 
+@version: 
+@Author: HLLI8
+@Date: 2020-04-16 16:47:50
+@LastEditors: HLLI8
+@LastEditTime: 2020-04-17 09:53:59
+'''
 import os
 
 #初始化标签
@@ -11,7 +19,7 @@ CLR_METHOD = "triangular"
 NUM_EPOCHS = 96
 
 TRAINING_PLOT_PATH = os.path.sep.join(["E:/PythonWorkSpace/DeepLearningWithOpenCV/Natural_Disaster_Detection/Keras_CyclicalLearningRate/keras-cyclical-learning-rates/MyCode/Output", "training_plot.png"])
-CLR_PLOT_PATH = os.path.join(["E:/PythonWorkSpace/DeepLearningWithOpenCV/Natural_Disaster_Detection/Keras_CyclicalLearningRate/keras-cyclical-learning-rates/MyCode/Output"], "clr_plot.png")
+CLR_PLOT_PATH = os.path.sep.join(["E:/PythonWorkSpace/DeepLearningWithOpenCV/Natural_Disaster_Detection/Keras_CyclicalLearningRate/keras-cyclical-learning-rates/MyCode/Output", "clr_plot.png"])
 
 
 

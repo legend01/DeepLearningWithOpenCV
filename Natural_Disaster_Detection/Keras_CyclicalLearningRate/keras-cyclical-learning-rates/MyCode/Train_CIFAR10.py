@@ -1,3 +1,8 @@
+import sys
+sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' #只显示warning和Error
+
 import matplotlib
 matplotlib.use("Agg")
 
@@ -15,7 +20,7 @@ import numpy as np
 print("[INFO] loading CIFAR-10 data...")
 ((trainX, trainY), (testX, testY)) = cifar10.load_data()
 trainX = trainX.astype("float")
-testY = testX.astype("float")
+testX = testX.astype("float")
 
 mean = np.mean(trainX, axis=0)
 trainX -= mean
@@ -29,7 +34,7 @@ aug = ImageDataGenerator(width_shift_range=0.1, height_shift_range=0.1, horizont
 
 print("[INFO] compiling model...")
 opt = SGD(lr=config.MIN_LR, momentum=0.9)
-model = MiniGoogLeNet.build(width=32, height=32, depth=32, classes=10)
+model = MiniGoogLeNet.build(width=32, height=32, depth=3, classes=10)
 
 model.compile(loss="categorical_crossentropy", optimizer=opt, metrics=["accuracy"])
 
@@ -38,7 +43,7 @@ clr = CyclicLR(
     mode = config.CLR_METHOD,
     base_lr = config.MIN_LR,
     max_lr = config.MAX_LR,
-    step_size = config.STEP_SIZE * (trainX.shape[0]//conifg.BATCH_SIZE)
+    step_size = config.STEP_SIZE * (trainX.shape[0]//config.BATCH_SIZE)
 )
 
 print("[INFO] traininig network....")
@@ -46,7 +51,7 @@ H = model.fit_generator(
     aug.flow(trainX, trainY, batch_size=config.BATCH_SIZE),
     validation_data = (testX, testY), 
     steps_per_epoch = trainX.shape[0],
-    epochs = config.NUM_EPOSHS, 
+    epochs = config.NUM_EPOCHS, 
     callbacks = [clr], 
     verbose = 1
 )
