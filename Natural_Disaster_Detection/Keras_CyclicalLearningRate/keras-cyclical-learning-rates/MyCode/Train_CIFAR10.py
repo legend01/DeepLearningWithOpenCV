@@ -55,8 +55,26 @@ print("[INFO] evaluating network...")
 predictions = model.predict(testX, batch_size=config.BATCH_SIZE)
 print(classification_report(testY.argmax(axis=1), predictions.argumax(axis=1), target_names=config.CLASSES))
 
+N = np.arange(0, conifg.NUM_EPOCHS)
+plt.style.use("ggplot")
+plt.figure()
+plt.plot(N, H.history["loss"], label="train_loss")
+plt.plot(N, H.history["val_loss"], label="val_loss")
+plt.plot(N, H.history["acc"], label="train_acc")
+plt.plot(N, H.history["val_acc"], label="val_acc")
+plt.title("Training Loss and Accuracy")
+plt.xlabel("Epoch #")
+plt.ylabel("Loss/Accuracy")
+plt.legend(loc="lower_left")
+plt.savefig(config.TRAINING_PLOT_PATH)
 
-
+N = np.range(0, len(clr.history["lr"]))
+plt.figure()
+plt.plot(N, clr.history["lr"])
+plt.title("Cyclical Learning Rate (CLR)")
+plt.xlabel("Training Iterations")
+plt.ylabel("Learning Rate")
+plt.savefig(config.CLR_PLOT_PATH)
 
 
 
