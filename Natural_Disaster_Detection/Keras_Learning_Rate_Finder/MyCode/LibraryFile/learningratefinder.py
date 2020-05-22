@@ -63,5 +63,6 @@ class LearningRateFinder:
         lr * = self.lrMult
         K.set_value(self.model.optimizer.lr, lr)
 
+    def find(self, trainDAta, startLR, endLR, epochs=None, stepsPerEpoch=None, batchSize=32, sampleSize=2048, verbose=1):
         
 
