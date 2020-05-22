@@ -1,3 +1,11 @@
+'''
+@Description: 
+@version: 
+@Author: HLLI8
+@Date: 2020-05-21 17:53:16
+@LastEditors: HLLI8
+@LastEditTime: 2020-05-22 18:19:21
+'''
 # import the necessary packages
 import os
 
@@ -24,7 +32,7 @@ CLR_METHOD = "triangular"
 NUM_EPOCHS = 48
 
 # set the path to the serialized model after training
-MODEL_PATH = os.path.sep.join(["output", "natural_disaster.model"])
+MODEL_PATH = os.path.sep.join(["E:/PythonWorkSpace/DeepLearningWithOpenCV/Natural_Disaster_Detection/Week06Code/natural-disaster-detection/output", "natural_disaster.model"])
 
 # define the path to the output learning rate finder plot, training
 # history plot and cyclical learning rate plot

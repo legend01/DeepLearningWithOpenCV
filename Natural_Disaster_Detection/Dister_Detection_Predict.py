@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-05-21 17:50:06
 @LastEditors: HLLI8
-@LastEditTime: 2020-05-22 09:32:36
+@LastEditTime: 2020-05-22 18:26:37
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -25,4 +25,15 @@ ap.add_argument("-s", "--size", type=int, default=128, help="size of queue for a
 ap.add_argument("-d", "--display", type=int, default=-1, help="whether or not output frame should be displayed to screen")
 args = vars(ap.parse_args())
 
+#加载预训练模型
+print("[INFO] loading model and label binarizer....")
+model = load_model(config.MODEL_PATH)
 
+#初始化预定义队列
+Q = deque(maxlen=args['size'])
+
+#初始化视频流,指出输出视屏文件夹，视屏规格
+print("[INFO] processing video....")
+vs = cv2.VideoCapture(args["input"])
+wirte = None
+(W, H) = (None, None)
