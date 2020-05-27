@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-05-21 17:50:06
 @LastEditors: HLLI8
-@LastEditTime: 2020-05-27 15:00:35
+@LastEditTime: 2020-05-27 15:13:40
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -56,4 +56,13 @@ while True:
     frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     frame = cv2.resize(frame, (224, 224))
     frame = frame.astype("float32")
+
+    #在数据帧中预测并且更新预测队列
+    preds = model.predict(np.expand_dims(frame, axis=0))[0]
+    Q.append(preds)
+
+    results = np.array(Q).mean(axis=0)
+    i = np.argmax(results)
+    label = config.CLASSES[i]
+
     
