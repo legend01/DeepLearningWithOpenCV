@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-05-21 17:50:06
 @LastEditors: HLLI8
-@LastEditTime: 2020-05-27 15:13:40
+@LastEditTime: 2020-05-27 16:14:19
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -65,4 +65,30 @@ while True:
     i = np.argmax(results)
     label = config.CLASSES[i]
 
+    #在输出数据帧中标明活动
+    text = "activity: {}".format(label)
+    cv2.putText(output, text, (35,50), cv2.FONT_HERSHEY_SIMPLEX, 1.25, (0, 255, 0), 5)
+
+    #检查数据流中是否写入为空
+    if wirter is None:
+        #初始化写入
+        fource = cv2.VideoWriter_fourcc(*"MJPG")
+        writer = cv2.VideoWriter(args["output"], fourcc, 30, (W,H), True)
+    
+    #将数据帧写入到磁盘中
+    writer.write(output)
+    
+    #检查是否将输出数据帧展示到屏幕中
+    if args["display"] > 0:
+        cv2.imshow("Output", output)
+        key = cv2.waitKey(1) & 0xFF
+
+        #'q'中断循环
+        if key == ord('q'):
+            break
+
+#释放文件指针
+print("[INFO] clearning up.....")
+writer.release()
+vs.release()
     
