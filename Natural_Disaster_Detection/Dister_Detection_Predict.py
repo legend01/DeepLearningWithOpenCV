@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-05-21 17:50:06
 @LastEditors: HLLI8
-@LastEditTime: 2020-05-22 18:26:37
+@LastEditTime: 2020-05-27 15:00:35
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -37,3 +37,23 @@ print("[INFO] processing video....")
 vs = cv2.VideoCapture(args["input"])
 wirte = None
 (W, H) = (None, None)
+
+#从视频流中循环帧数据
+while True:
+    #读取文件中下一个帧数据
+    (grabbed, frame) = vs.read()
+
+    #如果没有摄取到视频帧数据,就是达到了视频流的末尾
+    if not grabbed:
+        break
+
+    #如果视频帧维度为空,摄取
+    if W is None or H is None:
+        (H, W) = frame.shape[:2]
+    
+    #关闭输出帧，从BGR格式到RGB顺序格式，裁剪帧为224*224
+    output = frame.copy()
+    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    frame = cv2.resize(frame, (224, 224))
+    frame = frame.astype("float32")
+    
