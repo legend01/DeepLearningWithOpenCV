@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-05-21 17:50:06
 @LastEditors: HLLI8
-@LastEditTime: 2020-05-27 16:14:19
+@LastEditTime: 2020-05-27 17:12:24
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -22,7 +22,7 @@ ap = argparse.ArgumentParser()
 ap.add_argument("-i", "--input", required=True, help="path to our input video")
 ap.add_argument("-o", "--output", required=True, help="path to our output video")
 ap.add_argument("-s", "--size", type=int, default=128, help="size of queue for averaging")
-ap.add_argument("-d", "--display", type=int, default=-1, help="whether or not output frame should be displayed to screen")
+ap.add_argument("-d", "--display", type=int, default=1, help="whether or not output frame should be displayed to screen")
 args = vars(ap.parse_args())
 
 #加载预训练模型
@@ -35,7 +35,7 @@ Q = deque(maxlen=args['size'])
 #初始化视频流,指出输出视屏文件夹，视屏规格
 print("[INFO] processing video....")
 vs = cv2.VideoCapture(args["input"])
-wirte = None
+writer = None
 (W, H) = (None, None)
 
 #从视频流中循环帧数据
@@ -70,9 +70,9 @@ while True:
     cv2.putText(output, text, (35,50), cv2.FONT_HERSHEY_SIMPLEX, 1.25, (0, 255, 0), 5)
 
     #检查数据流中是否写入为空
-    if wirter is None:
+    if writer is None:
         #初始化写入
-        fource = cv2.VideoWriter_fourcc(*"MJPG")
+        fourcc = cv2.VideoWriter_fourcc(*"MJPG")
         writer = cv2.VideoWriter(args["output"], fourcc, 30, (W,H), True)
     
     #将数据帧写入到磁盘中
