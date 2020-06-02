@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-06-02 09:14:01
 @LastEditors: HLLI8
-@LastEditTime: 2020-06-02 10:37:08
+@LastEditTime: 2020-06-02 10:50:23
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -83,4 +83,9 @@ while True:
         
         # 计算双眼的纵横比
         ear = (leftEAR + rightEAR) / 2.0
+
+        leftEyeHull = cv2.convexHull(leftEye)
+        rightEyeHull = cv2.convexHull(rightEye)
+        cv2.drawContours(frame, [leftEyeHull], -1, (0, 255, 0), 1)
+        cv2.drawContours(frame, [rightEyeHull], -1, (0, 255, 0), 1)
         
