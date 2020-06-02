@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-06-02 09:14:01
 @LastEditors: HLLI8
-@LastEditTime: 2020-06-02 09:33:19
+@LastEditTime: 2020-06-02 09:51:06
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -41,3 +41,8 @@ ap.add_argument("-p", "--shape-predictor", required=True, help="path to facial l
 ap.add_argument("-v", "--video", type=str, default="", help="path to input video file")
 args = vars(ap.parse_args())
 
+EYE_AR_THRESH = 0.3
+EYE_AR_CONSEC_FRAMES = 3
+
+CONUNTER = 0
+TOTAL = 0
