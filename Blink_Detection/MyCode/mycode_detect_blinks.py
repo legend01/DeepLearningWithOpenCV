@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-06-02 09:14:01
 @LastEditors: HLLI8
-@LastEditTime: 2020-06-02 09:51:06
+@LastEditTime: 2020-06-02 10:04:46
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -41,8 +41,14 @@ ap.add_argument("-p", "--shape-predictor", required=True, help="path to facial l
 ap.add_argument("-v", "--video", type=str, default="", help="path to input video file")
 args = vars(ap.parse_args())
 
+# 眼睛长宽比低于某一阈值，然后上升到阈值以上，注册一个“眨眼”
 EYE_AR_THRESH = 0.3
+# 指示三个连续帧的眼睛纵横比小于eye_ar_thresh必须发生才能注册眨眼
 EYE_AR_CONSEC_FRAMES = 3
 
 CONUNTER = 0
 TOTAL = 0
+
+print("[INFO] loading facial landmarks predictor...")
+detector = dlib.get_frontal_face_detector()
+predictor = dlib.shape_predictor(args["shape_predictor"])
