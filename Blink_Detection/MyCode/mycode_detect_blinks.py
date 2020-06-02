@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-06-02 09:14:01
 @LastEditors: HLLI8
-@LastEditTime: 2020-06-02 11:08:48
+@LastEditTime: 2020-06-02 14:09:09
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -42,11 +42,11 @@ ap.add_argument("-v", "--video", type=str, default="", help="path to input video
 args = vars(ap.parse_args())
 
 # 眼睛长宽比低于某一阈值，然后上升到阈值以上，注册一个“眨眼”
-EYE_AR_THRESH = 0.3
+EYE_AR_THRESH = 0.25
 # 指示三个连续帧的眼睛纵横比小于eye_ar_thresh必须发生才能注册眨眼
-EYE_AR_CONSEC_FRAMES = 3
+EYE_AR_CONSEC_FRAMES = 6
 
-CONUNTER = 0
+COUNTER = 0
 TOTAL = 0
 
 print("[INFO] loading facial landmarks predictor...")
@@ -58,16 +58,14 @@ predictor = dlib.shape_predictor(args["shape_predictor"])
 (rStart, rEnd) = face_utils.FACIAL_LANDMARKS_IDXS["right_eye"]
 
 print("[INFO] starting video stream thread...")
-vs = FileVideoStream(args["video"]).start()
+vs = VideoStream(src=0).start()
 fileStream = True
-time.start(1.0)
+time.sleep(2.0)
 
 while True:
-    if fileStream and not vs.more():
-        break
 
     frame = vs.read()
-    frame = imutils.resize(frame, width=450)
+    frame = imutils.resize(frame, width=800)
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     
     rects = detector(gray, 0)
