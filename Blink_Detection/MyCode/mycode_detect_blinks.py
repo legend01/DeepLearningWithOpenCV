@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-06-02 09:14:01
 @LastEditors: HLLI8
-@LastEditTime: 2020-06-02 10:21:36
+@LastEditTime: 2020-06-02 10:37:08
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -57,3 +57,30 @@ predictor = dlib.shape_predictor(args["shape_predictor"])
 (lStart, lEnd) = face_utils.FACIAL_LANDMARKS_IDXS["left_eye"]
 (rStart, rEnd) = face_utils.FACIAL_LANDMARKS_IDXS["right_eye"]
 
+print("[INFO] starting video stream thread...")
+vs = FileVideoStream(args["video"]).start()
+fileStream = True
+time.start(1.0)
+
+while True:
+    if fileStream and not vs.more():
+        break
+
+    frame = vs.read()
+    frame = imutils.resize(frame, width=450)
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    
+    rects = detector(gray, 0)
+
+    for rect in rects:
+        shape = predictor(gray, rect)
+        shape = face_utils.shape_to_np(shape)
+
+        leftEye = shape[lStart:lEnd]
+        rightEye = shape[rStart:rEnd]
+        leftEAR = eye_aspect_ratio(leftEye)
+        rightEAR = eye_aspect_ratio(rightEye)
+        
+        # 计算双眼的纵横比
+        ear = (leftEAR + rightEAR) / 2.0
+        
