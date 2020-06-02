@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-06-02 09:14:01
 @LastEditors: HLLI8
-@LastEditTime: 2020-06-02 10:50:23
+@LastEditTime: 2020-06-02 11:08:48
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -88,4 +88,27 @@ while True:
         rightEyeHull = cv2.convexHull(rightEye)
         cv2.drawContours(frame, [leftEyeHull], -1, (0, 255, 0), 1)
         cv2.drawContours(frame, [rightEyeHull], -1, (0, 255, 0), 1)
+
+        if ear < EYE_AR_THRESH:
+            COUNTER += 1
         
+        else:
+            if COUNTER >= EYE_AR_CONSEC_FRAMES:
+                TOTAL += 1
+            
+            COUNTER = 0
+
+        # 在图像中写出眨眼的次数和纵横比
+        cv2.putText(frame, "Blinks: {}".format(TOTAL), (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
+        cv2.putText(frame, "EAR: {:.2f}".format(ear), (300, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
+
+    # 显示图像
+    cv2.imshow("Frame", frame)
+    key = cv2.waitKey(1) & 0xFF
+
+    # q按键退出循环
+    if key == ord("q"):
+        break
+
+cv2.destroyAllWindows()
+vs.stop()
