@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-06-02 09:14:01
 @LastEditors: HLLI8
-@LastEditTime: 2020-06-02 09:26:43
+@LastEditTime: 2020-06-02 09:33:19
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -35,4 +35,9 @@ def eye_aspect_ratio(eye):
 
     #返回眼睛的纵横比
     return ear
+
+ap = argparse.ArgumentParser()
+ap.add_argument("-p", "--shape-predictor", required=True, help="path to facial landmarks predictor")
+ap.add_argument("-v", "--video", type=str, default="", help="path to input video file")
+args = vars(ap.parse_args())
 
