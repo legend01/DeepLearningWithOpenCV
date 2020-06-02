@@ -20,9 +20,9 @@ from keras.utils import multi_gpu_model
 
 class YOLO(object):
     _defaults = {
-        "model_path": 'model_data/yolo.h5',
-        "anchors_path": 'model_data/yolo_anchors.txt',
-        "classes_path": 'model_data/coco_classes.txt',
+        "model_path": 'E:/PythonWorkSpace/DeepLearningWithOpenCV/Keras-YOLO3/keras-yolo3-master/model_data/yolo3_weights.h5',
+        "anchors_path": 'E:/PythonWorkSpace/DeepLearningWithOpenCV/Keras-YOLO3/keras-yolo3-master/model_data/yolo_anchors.txt',
+        "classes_path": 'E:/PythonWorkSpace/DeepLearningWithOpenCV/Keras-YOLO3/keras-yolo3-master/model_data/coco_classes.txt',
         "score" : 0.3,
         "iou" : 0.45,
         "model_image_size" : (416, 416),
@@ -135,7 +135,7 @@ class YOLO(object):
 
         print('Found {} boxes for {}'.format(len(out_boxes), 'img'))
 
-        font = ImageFont.truetype(font='font/FiraMono-Medium.otf',
+        font = ImageFont.truetype(font='E:/PythonWorkSpace/DeepLearningWithOpenCV/Keras-YOLO3/keras-yolo3-master/font/FiraMono-Medium.otf',
                     size=np.floor(3e-2 * image.size[1] + 0.5).astype('int32'))
         thickness = (image.size[0] + image.size[1]) // 300
 
@@ -180,7 +180,7 @@ class YOLO(object):
 
 def detect_video(yolo, video_path, output_path=""):
     import cv2
-    vid = cv2.VideoCapture(video_path)  # 使用OpenCV打开USB相机,读取视频
+    vid = cv2.VideoCapture(0)  # 使用OpenCV打开USB相机,读取视频
     if not vid.isOpened():
         raise IOError("Couldn't open webcam or video")
     video_FourCC    = int(vid.get(cv2.CAP_PROP_FOURCC)) # 编码方式
