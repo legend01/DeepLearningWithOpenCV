@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-06-03 14:37:19
 @LastEditors: HLLI8
-@LastEditTime: 2020-06-03 15:31:19
+@LastEditTime: 2020-06-03 15:38:10
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -55,3 +55,17 @@ ALARM_ON = False
 print("[INFO] loading facial landmarks predictor...")
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor(args["shape_predictor"])
+
+(lStart, lEnd) = face_utils.FACIAL_LANDMARKS_IDXS["left_eye"]
+(rStart, rEnd) = face_utils.FACIAL_LANDMARKS_IDXS["right_eye"]
+
+print("[INFO] starting video stream thread...")
+vs = VideoStream(src=args["webcam"]).start()
+time.sleep(1.0)
+
+while True:
+    frame = vs.read()
+    frame = imutils.resize(frame, width=800)
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    
+    rects = detector(gray, 0)
