@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-06-03 14:37:19
 @LastEditors: HLLI8
-@LastEditTime: 2020-06-03 14:41:36
+@LastEditTime: 2020-06-03 15:00:24
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -23,3 +23,19 @@ import time
 import dlib
 import cv2
 
+def sound_alarm(path):
+    # play an alarm sound
+    playsound.playsound(path) 
+
+def eye_aspect_ratio(eye):
+    # 计算垂直坐标部分欧几里得距离
+    A = dist.euclidean(eye[1], eye[5])
+    B = dist.euclidean(eye[2], eye[4])
+
+    # 计算水平坐标部分欧几里得距离
+    C = dist.euclidean(eye[0], eye[3])
+
+    # 计算纵横比
+    ear = (A + B) / (2.0 * C)
+
+    return ear
