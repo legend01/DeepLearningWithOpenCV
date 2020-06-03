@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-06-03 14:37:19
 @LastEditors: HLLI8
-@LastEditTime: 2020-06-03 15:21:49
+@LastEditTime: 2020-06-03 15:31:19
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -52,3 +52,6 @@ EYE_AR_CONSEC_FRAMES = 48
 COUNTER = 0
 ALARM_ON = False
 
+print("[INFO] loading facial landmarks predictor...")
+detector = dlib.get_frontal_face_detector()
+predictor = dlib.shape_predictor(args["shape_predictor"])
