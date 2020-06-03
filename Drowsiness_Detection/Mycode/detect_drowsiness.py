@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-06-03 14:37:19
 @LastEditors: HLLI8
-@LastEditTime: 2020-06-03 16:12:45
+@LastEditTime: 2020-06-03 16:39:23
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -80,4 +80,31 @@ while True:
         rightEAR = eye_aspect_ratio(rightEye)
 
         ear = (leftEAR + rightEAR) / 2.0
-    
+
+        leftEyeHull = cv2.convexHull(leftEye)
+        rightEyeHull = cv2.convexHull(rightEye)
+        cv2.drawContours(frame, [leftEyeHull], -1, (0, 255, 0), 1)
+        cv2.drawContours(frame, [rightEyeHull], -1, (0, 255, 0), 1)
+
+        if ear < EYE_AR_THRESH:
+            COUNTER += 1 
+            
+            #如果眼睛关闭在充足的次数后响起警报
+            if COUNTER >= EYE_AR_CONSEC_FRAMES:
+                #警报未打开，打开
+                if not ALARM_ON:
+                    ALARM_ON = True
+                    
+                    #检查警报文件是否支持，如果支持，开启一个线程播放报警
+                    if args["alarm"] != "":
+                        t = Thread(target=sound_alarm, args=(args["alarm"],))
+                        t.deamon = True
+                        t.start()
+                
+                #在图像中显示警报
+                cv2.putText(frame, "DROWSINESS ALEART!", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
+        
+        else:
+            COUNTER = 0
+            ALARM_ON = False
+        
