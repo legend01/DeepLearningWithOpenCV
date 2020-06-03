@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-06-03 14:37:19
 @LastEditors: HLLI8
-@LastEditTime: 2020-06-03 16:51:09
+@LastEditTime: 2020-06-03 17:11:50
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -41,7 +41,7 @@ def eye_aspect_ratio(eye):
     return ear
 
 ap = argparse.ArgumentParser()
-ap.add_argument("-p", "--shape_predictor", required=True, help="path to facial landmarks prediction")
+ap.add_argument("-p", "--shape-predictor", required=True, help="path to facial landmarks prediction")
 ap.add_argument("-a", "--alarm", type=str, default="", help="path alarm")
 ap.add_argument("-w", "--webcam", type=int , default=0, help="index of webcam on system")
 args = vars(ap.parse_args())
@@ -98,6 +98,7 @@ while True:
                     #检查警报文件是否支持，如果支持，开启一个线程播放报警
                     if args["alarm"] != "":
                         t = Thread(target=sound_alarm, args=(args["alarm"],))
+                        print("[INFO] drowsiness warming...")
                         t.deamon = True
                         t.start()
                 
