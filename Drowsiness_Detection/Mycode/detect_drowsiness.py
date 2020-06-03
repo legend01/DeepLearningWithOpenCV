@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-06-03 14:37:19
 @LastEditors: HLLI8
-@LastEditTime: 2020-06-03 15:38:10
+@LastEditTime: 2020-06-03 16:12:45
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -69,3 +69,15 @@ while True:
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     
     rects = detector(gray, 0)
+    
+    for rect in rects:
+        shape = predictor(gray, rect) 
+        shape = face_utils.shape_to_np(shape)
+        
+        leftEye = shape[lStart:lEnd]
+        rightEye = shape[rStart:rEnd]
+        leftEAR = eye_aspect_ratio(leftEye)
+        rightEAR = eye_aspect_ratio(rightEye)
+
+        ear = (leftEAR + rightEAR) / 2.0
+    
