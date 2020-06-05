@@ -126,3 +126,5 @@ dmypy.json
 Natural_Disaster_Detection/Week06Code/natural-disaster-detection/output/natural_disaster.model/variables/variables.data-00000-of-00002
 Natural_Disaster_Detection/Week06Code/natural-disaster-detection/output/natural_disaster.model/variables/variables.data-00001-of-00002
 Blink_Detection/Week08code/blink-detection/shape_predictor_68_face_landmarks.dat
+Keras_YOLO4/model_data/yolo4_weight.h5
+Keras_YOLO4/model_data/yolov4.weights
