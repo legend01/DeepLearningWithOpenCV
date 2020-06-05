@@ -100,7 +100,7 @@ class Yolo4(object):
 
         print('Found {} boxes for {}'.format(len(out_boxes), 'img'))
 
-        font = ImageFont.truetype(font='font/FiraMono-Medium.otf',
+        font = ImageFont.truetype(font='E:/PythonWorkSpace/DeepLearningWithOpenCV/Keras_YOLO4/font/FiraMono-Medium.otf',
                     size=np.floor(3e-2 * image.size[1] + 0.5).astype('int32'))
         thickness = (image.size[0] + image.size[1]) // 300
 
@@ -140,10 +140,54 @@ class Yolo4(object):
         print(end - start)
         return image
 
+    def detect_video(yolo4_model, output_path=""):
+        import cv2
+        vid = cv2.VideoCapture(0)  # 获取一帧
+        if not vid.isOpened():  # error handle
+            raise IOError("Couldn't open webcam or video")
+        video_FourCC = int(vid.get(cv2.CAP_PROP_FOURCC))  # 获取解码参数
+        video_fps = vid.get(cv2.CAP_PROP_FPS)  # 获取帧数
+        video_size = (int(vid.get(cv2.CAP_PROP_FRAME_WIDTH)),
+                      int(vid.get(cv2.CAP_PROP_FRAME_HEIGHT)))  # 获取尺寸
+        isOutput = True if output_path != "" else False  # error handle
+        if isOutput:
+            print("!!! TYPE:", type(output_path), type(
+                video_FourCC), type(video_fps), type(video_size))
+            out = cv2.VideoWriter(
+                output_path, video_FourCC, video_fps, video_size)
+        accum_time = 0
+        curr_fps = 0
+        fps = "FPS: ??"
+        prev_time = timer()
+        while True:
+            return_value, frame = vid.read()
+            image = Image.fromarray(frame)
+            image = yolo4_model.detect_image(
+                image, model_image_size=model_image_size)
+            result = np.asarray(image)
+            curr_time = timer()
+            exec_time = curr_time - prev_time  # 处理时间
+            prev_time = curr_time
+            accum_time = accum_time + exec_time  # 累计时间
+            curr_fps = curr_fps + 1  # 当前帧
+            if accum_time > 1:
+                accum_time = accum_time - 1
+                fps = "FPS: " + str(curr_fps)  # 计算帧数
+                curr_fps = 0
+            cv2.putText(result, text=fps, org=(3, 15), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+                        fontScale=0.50, color=(255, 0, 0), thickness=2)  # 打印帧数
+            cv2.namedWindow("result", cv2.WINDOW_NORMAL)
+            cv2.imshow("result", result)
+            if isOutput:
+                out.write(result)
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                cv2.destroyAllWindows()
+                break
+
 if __name__ == '__main__':
-    model_path = 'yolo4_weight.h5'
-    anchors_path = 'model_data/yolo4_anchors.txt'
-    classes_path = 'model_data/voc_classes.txt'
+    model_path = 'E:/PythonWorkSpace/DeepLearningWithOpenCV/Keras_YOLO4/model_data/yolo4_weight.h5'
+    anchors_path = 'E:/PythonWorkSpace/DeepLearningWithOpenCV/Keras_YOLO4/model_data/yolo4_anchors.txt'
+    classes_path = 'E:/PythonWorkSpace/DeepLearningWithOpenCV/Keras_YOLO4/model_data/coco_classes.txt'
 
     score = 0.5
     iou = 0.5
@@ -152,16 +196,5 @@ if __name__ == '__main__':
 
     yolo4_model = Yolo4(score, iou, anchors_path, classes_path, model_path)
 
-    while True:
-        img = input('Input image filename:')
-        try:
-            image = Image.open(img)
-        except:
-            print('Open Error! Try again!')
-            continue
-        else:
-            result = yolo4_model.detect_image(image, model_image_size=model_image_size)
-            plt.imshow(result)
-            plt.show()
-
+    Yolo4.detect_video(yolo4_model)
     yolo4_model.close_session()

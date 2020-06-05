@@ -167,7 +167,7 @@ class Yolo4(object):
 if __name__ == '__main__':
     model_path = 'E:/PythonWorkSpace/DeepLearningWithOpenCV/Keras_YOLO4/model_data/yolo4_weight.h5'
     anchors_path = 'E:/PythonWorkSpace/DeepLearningWithOpenCV/Keras_YOLO4/model_data/yolo4_anchors.txt'
-    classes_path = 'E:/PythonWorkSpace/DeepLearningWithOpenCV/Keras_YOLO4/model_data/voc_classes.txt'
+    classes_path = 'E:/PythonWorkSpace/DeepLearningWithOpenCV/Keras_YOLO4/model_data/coco_classes.txt'
     weights_path = 'E:/PythonWorkSpace/DeepLearningWithOpenCV/Keras_YOLO4/model_data/yolov4.weights'
 
     score = 0.5
