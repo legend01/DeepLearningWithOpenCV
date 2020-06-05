@@ -1,3 +1,8 @@
+import sys
+sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' #只显示warning和Error
+
 import os
 import colorsys
 
@@ -160,10 +165,10 @@ class Yolo4(object):
         self.sess.close()
 
 if __name__ == '__main__':
-    model_path = 'yolo4_weight.h5'
-    anchors_path = 'model_data/yolo4_anchors.txt'
-    classes_path = 'model_data/voc_classes.txt'
-    weights_path = 'yolov4_last.weights'
+    model_path = 'E:/PythonWorkSpace/DeepLearningWithOpenCV/Keras_YOLO4/model_data/yolo4_weight.h5'
+    anchors_path = 'E:/PythonWorkSpace/DeepLearningWithOpenCV/Keras_YOLO4/model_data/yolo4_anchors.txt'
+    classes_path = 'E:/PythonWorkSpace/DeepLearningWithOpenCV/Keras_YOLO4/model_data/voc_classes.txt'
+    weights_path = 'E:/PythonWorkSpace/DeepLearningWithOpenCV/Keras_YOLO4/model_data/yolov4.weights'
 
     score = 0.5
     iou = 0.5
