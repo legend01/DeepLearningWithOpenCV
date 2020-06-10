@@ -14,19 +14,19 @@ from tensorflow.keras.layers import concatenate
 
 def shallownet_sequential(width, height, depth, classes):
 	# initialize the model along with the input shape to be
-	# "channels last" ordering
+	# "channels last" ordering 初始化模型以及输入形状为通道最后次序 栈模型
 	model = Sequential()
 	inputShape = (height, width, depth)
 
 	# define the first (and only) CONV => RELU layer
-	model.add(Conv2D(32, (3, 3), padding="same",
+	model.add(Conv2D(32, (3, 3), padding="same", #卷积层
 		input_shape=inputShape))
-	model.add(Activation("relu"))
+	model.add(Activation("relu")) #使用ReLU激活函数
 
 	# softmax classifier
-	model.add(Flatten())
+	model.add(Flatten()) #降维，矩阵转化为向量+全连接层
 	model.add(Dense(classes))
-	model.add(Activation("softmax"))
+	model.add(Activation("softmax")) #使用softmax激活函数
 
 	# return the constructed network architecture
 	return model
