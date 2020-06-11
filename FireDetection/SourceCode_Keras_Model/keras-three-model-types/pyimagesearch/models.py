@@ -34,9 +34,9 @@ def shallownet_sequential(width, height, depth, classes):
 def minigooglenet_functional(width, height, depth, classes):
 	def conv_module(x, K, kX, kY, stride, chanDim, padding="same"):
 		# define a CONV => BN => RELU pattern
-		x = Conv2D(K, (kX, kY), strides=stride, padding=padding)(x)
-		x = BatchNormalization(axis=chanDim)(x)
-		x = Activation("relu")(x)
+		x = Conv2D(K, (kX, kY), strides=stride, padding=padding)(x) #卷积层
+		x = BatchNormalization(axis=chanDim)(x) #单个batch归一化
+		x = Activation("relu")(x) #relu激活层
 
 		# return the block
 		return x
@@ -46,7 +46,7 @@ def minigooglenet_functional(width, height, depth, classes):
 		# channel dimension
 		conv_1x1 = conv_module(x, numK1x1, 1, 1, (1, 1), chanDim)
 		conv_3x3 = conv_module(x, numK3x3, 3, 3, (1, 1), chanDim)
-		x = concatenate([conv_1x1, conv_3x3], axis=chanDim)
+		x = concatenate([conv_1x1, conv_3x3], axis=chanDim) #将模块分支聚集在通道维度上,两个分支填充,输出的尺寸相等,可以沿信道维度连接
 
 		# return the block
 		return x
@@ -54,9 +54,9 @@ def minigooglenet_functional(width, height, depth, classes):
 	def downsample_module(x, K, chanDim):
 		# define the CONV module and POOL, then concatenate
 		# across the channel dimensions
-		conv_3x3 = conv_module(x, K, 3, 3, (2, 2), chanDim,
+		conv_3x3 = conv_module(x, K, 3, 3, (2, 2), chanDim, #卷积层
 			padding="valid")
-		pool = MaxPooling2D((3, 3), strides=(2, 2))(x)
+		pool = MaxPooling2D((3, 3), strides=(2, 2))(x) #池化层
 		x = concatenate([conv_3x3, pool], axis=chanDim)
 
 		# return the block
@@ -69,7 +69,7 @@ def minigooglenet_functional(width, height, depth, classes):
 
 	# define the model input and first CONV module
 	inputs = Input(shape=inputShape)
-	x = conv_module(inputs, 96, 3, 3, (1, 1), chanDim)
+	x = conv_module(inputs, 96, 3, 3, (1, 1), chanDim) #卷积层
 
 	# two Inception modules followed by a downsample module
 	x = inception_module(x, 32, 32, chanDim)
@@ -87,12 +87,12 @@ def minigooglenet_functional(width, height, depth, classes):
 	x = inception_module(x, 176, 160, chanDim)
 	x = inception_module(x, 176, 160, chanDim)
 	x = AveragePooling2D((7, 7))(x)
-	x = Dropout(0.5)(x)
+	x = Dropout(0.5)(x) # dropout正则化 随机失活 防止过拟合
 
 	# softmax classifier
-	x = Flatten()(x)
-	x = Dense(classes)(x)
-	x = Activation("softmax")(x)
+	x = Flatten()(x) #平滑层
+	x = Dense(classes)(x) #全连接层
+	x = Activation("softmax")(x) #激活层
 
 	# create the model
 	model = Model(inputs, x, name="minigooglenet")
