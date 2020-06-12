@@ -86,8 +86,8 @@ def minigooglenet_functional(width, height, depth, classes):
 	# two Inception modules followed by global POOL and dropout
 	x = inception_module(x, 176, 160, chanDim)
 	x = inception_module(x, 176, 160, chanDim)
-	x = AveragePooling2D((7, 7))(x)
-	x = Dropout(0.5)(x) # dropout正则化 随机失活 防止过拟合
+	x = AveragePooling2D((7, 7))(x) #平均池化层
+	x = Dropout(0.5)(x) # dropout正则化 随机失活0.5的概率 防止过拟合
 
 	# softmax classifier
 	x = Flatten()(x) #平滑层
@@ -107,34 +107,34 @@ class MiniVGGNetModel(Model):
 
 		# initialize the layers in the first (CONV => RELU) * 2 => POOL
 		# layer set
-		self.conv1A = Conv2D(32, (3, 3), padding="same")
-		self.act1A = Activation("relu")
-		self.bn1A = BatchNormalization(axis=chanDim)
-		self.conv1B = Conv2D(32, (3, 3), padding="same")
-		self.act1B = Activation("relu")
-		self.bn1B = BatchNormalization(axis=chanDim)
-		self.pool1 = MaxPooling2D(pool_size=(2, 2))
+		self.conv1A = Conv2D(32, (3, 3), padding="same") #卷积层
+		self.act1A = Activation("relu") #relu激活层
+		self.bn1A = BatchNormalization(axis=chanDim) #batch归一化
+		self.conv1B = Conv2D(32, (3, 3), padding="same") #卷积层
+		self.act1B = Activation("relu") #relu激活层
+		self.bn1B = BatchNormalization(axis=chanDim) #batch归一化
+		self.pool1 = MaxPooling2D(pool_size=(2, 2)) #最大池化层
 
 		# initialize the layers in the second (CONV => RELU) * 2 => POOL
 		# layer set
-		self.conv2A = Conv2D(32, (3, 3), padding="same")
-		self.act2A = Activation("relu")
-		self.bn2A = BatchNormalization(axis=chanDim)
-		self.conv2B = Conv2D(32, (3, 3), padding="same")
-		self.act2B = Activation("relu")
-		self.bn2B = BatchNormalization(axis=chanDim)
-		self.pool2 = MaxPooling2D(pool_size=(2, 2))
+		self.conv2A = Conv2D(32, (3, 3), padding="same") #卷积层
+		self.act2A = Activation("relu") #relu激活层
+		self.bn2A = BatchNormalization(axis=chanDim) #batch归一化
+		self.conv2B = Conv2D(32, (3, 3), padding="same") #卷积层
+		self.act2B = Activation("relu") #relu激活层
+		self.bn2B = BatchNormalization(axis=chanDim) #batch归一化
+		self.pool2 = MaxPooling2D(pool_size=(2, 2)) #最大池化层
 
 		# initialize the layers in our fully-connected layer set
-		self.flatten = Flatten()
-		self.dense3 = Dense(512)
-		self.act3 = Activation("relu")
-		self.bn3 = BatchNormalization()
-		self.do3 = Dropout(0.5)
+		self.flatten = Flatten() #平滑层
+		self.dense3 = Dense(512) #全连接层
+		self.act3 = Activation("relu") #relu激活层
+		self.bn3 = BatchNormalization() #batch归一化
+		self.do3 = Dropout(0.5) #随机失活层 dropout归一化
 
 		# initialize the layers in the softmax classifier layer set
-		self.dense4 = Dense(classes)
-		self.softmax = Activation("softmax")
+		self.dense4 = Dense(classes) #全连接层
+		self.softmax = Activation("softmax") #softmax分类
 
 	def call(self, inputs):
 		# build the first (CONV => RELU) * 2 => POOL layer set
