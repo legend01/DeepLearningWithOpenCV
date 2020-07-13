@@ -1,4 +1,9 @@
 import sys
+sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' #只显示warning和Error
+
+import sys
 import argparse
 from yolo import YOLO, detect_video
 from PIL import Image
@@ -52,7 +57,7 @@ if __name__ == '__main__':
     Command line positional arguments -- for video detection mode
     '''
     parser.add_argument(
-        "--input", nargs='?', type=str,required=False,default='./path2your_video',
+        "--input", nargs='?', type=str,required=False,default='0',
         help = "Video input path"
     )
 

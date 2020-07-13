@@ -20,8 +20,8 @@ from keras.utils import multi_gpu_model
 
 class YOLO(object):
     _defaults = {
-        "model_path": 'E:/PythonWorkSpace/DeepLearningWithOpenCV/Keras-YOLO3/keras-yolo3-master/model_data/yolo3_weights.h5',
-        "anchors_path": 'E:/PythonWorkSpace/DeepLearningWithOpenCV/Keras-YOLO3/keras-yolo3-master/model_data/yolo_anchors.txt',
+        "model_path": 'E:/PythonWorkSpace/DeepLearningWithOpenCV/Keras-YOLO3/keras-yolo3-master/model_data/tiny_yolo3_weights.h5',
+        "anchors_path": 'E:/PythonWorkSpace/DeepLearningWithOpenCV/Keras-YOLO3/keras-yolo3-master/model_data/tiny_yolo_anchors.txt',
         "classes_path": 'E:/PythonWorkSpace/DeepLearningWithOpenCV/Keras-YOLO3/keras-yolo3-master/model_data/coco_classes.txt',
         "score" : 0.3,
         "iou" : 0.45,

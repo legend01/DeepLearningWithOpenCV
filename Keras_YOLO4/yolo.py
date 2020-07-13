@@ -21,13 +21,13 @@ import cv2
 
 class YOLO(object):
     _defaults = {
-        "model_path": './yolo4_weight.h5',
-        "anchors_path": 'model_data/yolo_anchors.txt',
-        "classes_path": 'model_data/voc_classes.txt',
+        "model_path": 'E:/PythonWorkSpace/DeepLearningWithOpenCV/Keras_YOLO4/model_data/yolo4_weight.h5',
+        "anchors_path": 'E:/PythonWorkSpace/DeepLearningWithOpenCV/Keras_YOLO4/model_data/yolo4_anchors.txt',
+        "classes_path": 'E:/PythonWorkSpace/DeepLearningWithOpenCV/Keras_YOLO4/model_data/coco_classes.txt',
         "score" : 0.3,
         "iou" : 0.20,
         "model_image_size" : (416, 416),
-        "gpu_num" : 0,
+        "gpu_num" : 1,
     }
 
     @classmethod
@@ -126,7 +126,7 @@ class YOLO(object):
 
         print('Found {} boxes for {}'.format(len(out_boxes), 'img'))
 
-        font = ImageFont.truetype(font='font/FiraMono-Medium.otf',
+        font = ImageFont.truetype(font='E:/PythonWorkSpace/DeepLearningWithOpenCV/Keras_YOLO4/font/FiraMono-Medium.otf',
                     size=np.floor(3e-2 * image.size[1] + 0.5).astype('int32'))
         thickness = (image.size[0] + image.size[1]) // 300
 

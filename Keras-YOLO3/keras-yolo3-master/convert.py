@@ -1,8 +1,12 @@
-#! /usr/bin/env python
+""" #! /usr/bin/env python """
 """
 Reads Darknet config and weights and creates Keras model with TF backend.
 
 """
+import sys
+sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' #只显示warning和Error
 
 import argparse
 import configparser
@@ -22,9 +26,9 @@ from keras.utils.vis_utils import plot_model as plot
 
 
 parser = argparse.ArgumentParser(description='Darknet To Keras Converter.')
-parser.add_argument('--config_path', default='yolov3.cfg', help='Path to Darknet cfg file.', )
-parser.add_argument('--weights_path',  default='model_data/yolov3.weights', help='Path to Darknet weights file.',)
-parser.add_argument('--output_path', default='model_data/yolo3_weights.h5', help='Path to output Keras model file.')
+parser.add_argument('--config_path', default='E:/PythonWorkSpace/DeepLearningWithOpenCV/Keras-YOLO3/keras-yolo3-master/yolov3-tiny.cfg', help='Path to Darknet cfg file.', )
+parser.add_argument('--weights_path',  default='E:/PythonWorkSpace/DeepLearningWithOpenCV/Keras-YOLO3/keras-yolo3-master/model_data/yolov3-tiny.weights', help='Path to Darknet weights file.',)
+parser.add_argument('--output_path', default='E:/PythonWorkSpace/DeepLearningWithOpenCV/Keras-YOLO3/keras-yolo3-master/model_data/tiny_yolo3_weights.h5', help='Path to output Keras model file.')
 parser.add_argument(
     '-p',
     '--plot_model',
