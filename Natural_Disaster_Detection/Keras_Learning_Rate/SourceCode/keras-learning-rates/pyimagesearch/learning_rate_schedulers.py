@@ -26,7 +26,7 @@ class StepDecay(LearningRateDecay):
 
 	def __call__(self, epoch):
 		# compute the learning rate for the current epoch
-		exp = np.floor((1 + epoch) / self.dropEvery)
+		exp = np.floor((1 + epoch) / self.dropEvery) #当前epoch计算学习率
 		alpha = self.initAlpha * (self.factor ** exp)
 
 		# return the learning rate
