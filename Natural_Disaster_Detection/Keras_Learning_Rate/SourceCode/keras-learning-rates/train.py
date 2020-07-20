@@ -90,7 +90,7 @@ if args["schedule"] == "standard":
 elif schedule is None:
 	print("[INFO] no learning rate schedule being used")
 
-# initialize our optimizer and model, then compile it
+# initialize our optimizer and model, then compile it 初始化优化器 初始学习率1e-1
 opt = SGD(lr=1e-1, momentum=0.9, decay=decay)
 model = ResNet.build(32, 32, 3, 10, (9, 9, 9),
 	(64, 64, 128, 256), reg=0.0005)

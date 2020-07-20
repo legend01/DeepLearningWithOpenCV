@@ -22,7 +22,7 @@ from pyimagesearch.models import shallownet_sequential
 from sklearn.preprocessing import LabelBinarizer
 from sklearn.metrics import classification_report
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from tensorflow.keras.optimizers import SGD
+from tensorflow.keras.optimizers import SGD # 随机梯度下降算法
 from tensorflow.keras.datasets import cifar10
 import matplotlib.pyplot as plt
 import numpy as np
