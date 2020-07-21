@@ -1,0 +1,3 @@
+#!/bin/bash
+
+python E:\PythonWorkSpace\DeepLearningWithOpenCV\Face_Landmask_Detection\face_landmarks_videoStream_vesion01.py --shape-predictor E:/PythonWorkSpace/DeepLearningWithOpenCV/Dlib/shape_predictor_81_face_landmarks/shape_predictor_81_face_landmarks.dat

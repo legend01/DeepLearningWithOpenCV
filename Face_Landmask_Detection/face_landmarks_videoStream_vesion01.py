@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-03-20 15:41:47
 @LastEditors: HLLI8
-@LastEditTime: 2020-03-21 11:46:57
+@LastEditTime: 2020-07-21 13:59:09
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -37,16 +37,18 @@ def CatchVideoStream():
 def main():
     #设置所需参数
     ap = argparse.ArgumentParser()
-    ap.add_argument("-p", "--shape-predictor", required=False, help="path to facial landmark prediction")
-    predictor_path = "E:/PythonWorkSpace/DeepLearningWithOpenCV/Face_Landmask_Detection/Gradient_Descent_DS/shape_predictor_68_face_landmarks.dat"
+    ap.add_argument("-p", "--shape-predictor", required=True, help="path to facial landmark prediction")
+    # predictor_path = "E:/PythonWorkSpace/DeepLearningWithOpenCV/Face_Landmask_Detection/Gradient_Descent_DS/shape_predictor_68_face_landmarks.dat"
+    # predictor_path_81points = "E:/PythonWorkSpace/DeepLearningWithOpenCV/Dlib/shape_predictor_81_face_landmarks/shape_predictor_81_face_landmarks.dat"
     ap.add_argument("-i", "--image", required=False, default='0', help="path to input image")
     #image_path = "E:/PythonWorkSpace/DeepLearningWithOpenCV/Face_Landmask_Detection/image/two_people.jpg"
     args = vars(ap.parse_args())
 
     #初始化dlib人脸检测，创建面部标志预测器
     detector = dlib.get_frontal_face_detector()
-    #predictor = dlib.shape_predictor(args["shape_predictor"])
-    predictor = dlib.shape_predictor(predictor_path)
+    predictor = dlib.shape_predictor(args["shape_predictor"])
+    # predictor = dlib.shape_predictor(predictor_path)
+    # predictor = dlib.shape_predictor(predictor_path_81points)
 
     if args['image'] != '0':
         #if image_path != ' ':
