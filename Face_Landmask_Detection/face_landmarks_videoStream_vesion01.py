@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-03-20 15:41:47
 @LastEditors: HLLI8
-@LastEditTime: 2020-07-21 13:59:09
+@LastEditTime: 2020-07-21 15:57:19
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -77,8 +77,9 @@ def main():
 
             #人脸序号标记
             cv2.putText(image, "Face #{}".format(i+1), (x-10, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
-
-            print("[INFO] Face tagging......")
+            
+            cv2.circle(image, (x, y), 5, (200, 0, 255), 4)
+            print("[INFO] Face #{}:{}".format(i+1, rect))
             #循环找到面部关键点(x, y)坐标并在图像中绘制
             for (x, y) in shape:
                 cv2.circle(image, (x, y), 1, (0, 0, 255), -1)
