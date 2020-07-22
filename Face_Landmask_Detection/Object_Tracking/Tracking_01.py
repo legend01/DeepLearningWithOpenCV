@@ -4,7 +4,7 @@
 @Author: HLLI8
 @Date: 2020-07-22 10:00:48
 @LastEditors: HLLI8
-@LastEditTime: 2020-07-22 10:53:33
+@LastEditTime: 2020-07-22 11:01:25
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -52,8 +52,10 @@ if __name__ == "__main__":
             while True:
                 imag_first = frame.copy() #不改变原来的帧，拷贝新的出来
                 if track_window: #跟踪目标的窗口画不出来，实时标出来
+                    print("[INFO] Track Object position:{}".format(track_window))
                     cv2.rectangle(imag_first, (track_window[0], track_window[1]), (track_window[2], track_window[3]), (0, 0, 255), 1)
                 elif selection: #跟踪目标的窗口随鼠标拖动实时显示
+                    print("[INFO] mouse potion:{}".format(selection))
                     cv2.rectangle(imag_first, (selection[0], selection[1]), (selection[2], selection[3]), (0, 0, 255), 1)
                 cv2.imshow("image", imag_first)
                 #按下回车退出循环
@@ -65,7 +67,7 @@ if __name__ == "__main__":
             tracker.update(frame) #更新,实时跟踪
         
         box_predict = tracker.get_position() #得到目标位置
-        print
+        print("[INFO] position:{}".format(box_predict))
         cv2.rectangle(frame, (int(box_predict.left()), int(box_predict.top())), (int(box_predict.right()), int(box_predict.bottom())), (0, 255, 0), 1) #用矩阵框标注出来
         cv2.imshow("image", frame)
         #如果按下ESC键，退出
