@@ -71,7 +71,7 @@ print("[INFO] loading CIFAR-10 data...")
 trainX = trainX.astype("float") / 255.0
 testX = testX.astype("float") / 255.0
 
-# convert the labels from integers to vectors
+# convert the labels from integers to vectors # 将标签从整数转换为向量	
 lb = LabelBinarizer()
 trainY = lb.fit_transform(trainY)
 testY = lb.transform(testY)
