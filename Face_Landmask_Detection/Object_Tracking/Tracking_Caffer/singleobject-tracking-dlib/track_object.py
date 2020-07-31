@@ -24,6 +24,7 @@ CLASSES = ["background", "aeroplane", "bicycle", "bird", "boat", "bottle", "bus"
 print("[INFO] loading model....")
 net = cv2.dnn.readNetFromCaffe(args["prototxt"], args["model"])
 
+# 初始化视频流，dlib接口，输出视频地址地址，预测标签
 print("[INFO] starting video stream...")
 vs = cv2.VideoCapture(args["video"])
 tracker = None
@@ -33,15 +34,16 @@ label = ""
 fps = FPS().start()
 
 while True:
+    # 从视屏中抓取下一个帧
     (grabbed , frame) = vs.read()
 
-    if frame is None:
+    if frame is None: #检查是否达到视频文件尾部
         break
-    frame = imutils.resize(frame, width=600)
+    frame = imutils.resize(frame, width=600) #resize视屏流帧尺寸大小
     rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
-    if args["output"] is not None and writer is None:
-        fourcc = cv2.VideoWriter_fourcc(**"MJPG")
+    if args["output"] is not None and writer is None: # 写视屏流到存储 初始化写函数
+        fourcc = cv2.VideoWriter_fourcc(*"MJPG")
         writer = cv2.VideoWriter(args["output"], fourcc, 30, (frame.shape[1], frame.shape[0]), True)
 
     if tracker is None:
@@ -49,7 +51,7 @@ while True:
         blob = cv2.dnn.blobFromImage(frame, 0.007843, (w, h), 127.5)
 
         net.setInput(blob)
-        detections = net.fowward()
+        detections = net.forward() # 获取预测值
 
         if len(detections) > 0:
             i = np.argmax(detections[0, 0, :, 2])
@@ -67,28 +69,28 @@ while True:
 
                 cv2.rectangle(frame, (startX, startY), (endX, endY), (0, 255, 0), 2)
                 cv2.putText(frame, label, (startX, startY - 15), cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 255, 0), 2)
-        else:
-            tracker.update(rgb)
-            pos = tracker.get_position()
+    else:
+        tracker.update(rgb)
+        pos = tracker.get_position()
 
-            startX = int(pos.left())
-            startY = int(pos.top())
-            endX = int(pos.right())
-            endY = int(pos.bottom())
+        startX = int(pos.left())
+        startY = int(pos.top())
+        endX = int(pos.right())
+        endY = int(pos.bottom())
 
-            cv2.rectangle(frame, (startX, startY), (endX, endY), (0, 255, 0), 2)
-            cv2.putText(frame, label, (startX, startY-15), cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 255, 0), 2)
+        cv2.rectangle(frame, (startX, startY), (endX, endY), (0, 255, 0), 2)
+        cv2.putText(frame, label, (startX, startY-15), cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 255, 0), 2)
 
-        if writer is not None:
-            writer.write(frame)
-        
-        cv2.imshow("Frame", frame)
-        key = cv2.waitKey(1) & 0xFF
+    if writer is not None:
+        writer.write(frame)
+    
+    cv2.imshow("Frame", frame)
+    key = cv2.waitKey(1) & 0xFF
 
-        if key == ord('q'):
-            break
-        
-        fps.update()
+    if key == ord('q'):
+        break
+    
+    fps.update()
 
 fps.stop()
 print("[INFO] elapsed time: {:.2f}".format(fps.elapsed()))
