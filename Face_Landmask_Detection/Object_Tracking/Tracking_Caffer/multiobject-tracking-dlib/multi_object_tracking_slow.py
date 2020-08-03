@@ -74,6 +74,17 @@ while True:
 	if len(trackers) == 0:
 		# grab the frame dimensions and convert the frame to a blob
 		(h, w) = frame.shape[:2]
+		'''
+		note: blob只是具有相同空间维度（即宽度和高度），相同深度（通道数）的图像（可能是集合），它们都以相同的方式被预处理。
+				blob = cv2.dnn.blobFromImage(image, scalefactor=1.0, size, mean, swapRB=True，crop=False,ddepth = CV_32F )
+				1.image，这是传入的，需要进行处理的图像。
+				2.scalefactor，执行完减均值后，需要缩放图像，默认是1，需要注意，scalefactor = 1 / \sigma,这是真正乘上的值。 
+				3.size,这是神经网络，真正支持输入的值
+				4.mean,这是我们要减去的均值，可以是R,G,B均值三元组，或者是一个值，每个通道都减这值
+				减均值帮助我们对抗输入图像的亮度变化，所以我们将减均值作为一个技术用来帮助我们的卷积神经网络。
+		Author: HLLI8
+		Date: 2020-08-03 13:46:10
+		'''
 		blob = cv2.dnn.blobFromImage(frame, 0.007843, (w, h), 127.5)
 
 		# pass the blob through the network and obtain the detections
