@@ -1,7 +1,10 @@
 # USAGE
 # python multi_object_tracking_slow.py --prototxt mobilenet_ssd/MobileNetSSD_deploy.prototxt \
 #	--model mobilenet_ssd/MobileNetSSD_deploy.caffemodel --video race.mp4
-
+import sys
+sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' #只显示warning和Error
 # import the necessary packages
 from imutils.video import FPS
 import numpy as np
