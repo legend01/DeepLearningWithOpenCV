@@ -1,1 +1,1 @@
-python multi_object_tracking_slow.py --prototxt ./mobilenet_ssd/MobileNetSSD_deploy.prototxt --model ./mobilenet_ssd/MobileNetSSD_deploy.caffemodel --video E:\PythonWorkSpace\DeepLearningWithOpenCV\TinyYOLO\Week07code\tiny-yolo-ncs\videos\test_video.mp4
+python multi_object_tracking_fast.py --prototxt ./mobilenet_ssd/MobileNetSSD_deploy.prototxt --model ./mobilenet_ssd/MobileNetSSD_deploy.caffemodel --video E:\PythonWorkSpace\DeepLearningWithOpenCV\TinyYOLO\Week07code\tiny-yolo-ncs\videos\test_video.mp4

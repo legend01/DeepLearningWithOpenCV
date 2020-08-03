@@ -94,6 +94,7 @@ while True:
 		# and predictions
 		net.setInput(blob)
 		detections = net.forward()
+		print("[INFO] detections = ", detections)
 
 		# loop over the detections
 		for i in np.arange(0, detections.shape[2]):
