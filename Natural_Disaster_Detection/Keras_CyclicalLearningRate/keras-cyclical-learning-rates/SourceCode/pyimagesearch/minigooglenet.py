@@ -14,7 +14,7 @@ from keras import backend as K
 
 class MiniGoogLeNet:
 	@staticmethod
-	def conv_module(x, K, kX, kY, stride, chanDim, padding="same"):
+	def conv_module(x, K, kX, kY, stride, chanDim, padding="same"): # x:网络层的输入  K:CONV层的filter个数   kX和kY:filter的大小    stride:步长   padding:填充模式,"same",保持输入跟输出大小一致
 		# define a CONV => BN => RELU pattern
 		x = Conv2D(K, (kX, kY), strides=stride, padding=padding)(x)
 		x = BatchNormalization(axis=chanDim)(x)
@@ -24,7 +24,7 @@ class MiniGoogLeNet:
 		return x
 
 	@staticmethod
-	def inception_module(x, numK1x1, numK3x3, chanDim):
+	def inception_module(x, numK1x1, numK3x3, chanDim): # x:输入层   numK1*1:1*1的filter个数   numK3*3:3*3的filter个数  chanDim:通道维度
 		# define two CONV modules, then concatenate across the
 		# channel dimension
 		conv_1x1 = MiniGoogLeNet.conv_module(x, numK1x1, 1, 1,
@@ -37,7 +37,7 @@ class MiniGoogLeNet:
 		return x
 
 	@staticmethod
-	def downsample_module(x, K, chanDim):
+	def downsample_module(x, K, chanDim): # x:输入层   K:filter的个数     chanDim:特征维度
 		# define the CONV module and POOL, then concatenate
 		# across the channel dimensions
 		conv_3x3 = MiniGoogLeNet.conv_module(x, K, 3, 3, (2, 2),
@@ -49,7 +49,7 @@ class MiniGoogLeNet:
 		return x
 
 	@staticmethod
-	def build(width, height, depth, classes):
+	def build(width, height, depth, classes): # width:特征图像的宽度    height:特征图像的高度    depth:通道数    classes:类别个数
 		# initialize the input shape to be "channels last" and the
 		# channels dimension itself
 		inputShape = (height, width, depth)
@@ -63,12 +63,12 @@ class MiniGoogLeNet:
 
 		# define the model input and first CONV module
 		inputs = Input(shape=inputShape)
-		x = MiniGoogLeNet.conv_module(inputs, 96, 3, 3, (1, 1),
+		x = MiniGoogLeNet.conv_module(inputs, 96, 3, 3, (1, 1),   #96个3*3的filter
 			chanDim)
 
 		# two Inception modules followed by a downsample module
-		x = MiniGoogLeNet.inception_module(x, 32, 32, chanDim)
-		x = MiniGoogLeNet.inception_module(x, 32, 48, chanDim)
+		x = MiniGoogLeNet.inception_module(x, 32, 32, chanDim) #32个1*1的filter和32个1*1的filters   K = 32+32= 64个filters
+		x = MiniGoogLeNet.inception_module(x, 32, 48, chanDim) #32个1*1的filters和48个3*3的filters  K = 32+48= 80个filters
 		x = MiniGoogLeNet.downsample_module(x, 80, chanDim)
 
 		# four Inception modules followed by a downsample module
@@ -80,8 +80,8 @@ class MiniGoogLeNet:
 
 		# two Inception modules followed by global POOL and dropout
 		x = MiniGoogLeNet.inception_module(x, 176, 160, chanDim)
-		x = MiniGoogLeNet.inception_module(x, 176, 160, chanDim)
-		x = AveragePooling2D((7, 7))(x)
+		x = MiniGoogLeNet.inception_module(x, 176, 160, chanDim) # 7*7*336输出特征图像大小
+		x = AveragePooling2D((7, 7))(x) # 1*1*336输出特征图像大小
 		x = Dropout(0.5)(x)
 
 		# softmax classifier

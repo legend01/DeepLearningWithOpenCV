@@ -1,6 +1,9 @@
 # USAGE
 # python train_cifar10.py
-
+import sys
+sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' #只显示warning和Error
 # set the matplotlib backend so figures can be saved in the background
 import matplotlib
 matplotlib.use("Agg")
@@ -56,13 +59,13 @@ clr = CyclicLR(
 
 # train the network
 print("[INFO] training network...")
-H = model.fit_generator(
+H = model.fit_generator( #其 History.history 属性是连续 epoch 训练损失和评估值，以及验证集损失和评估值的记录（如果适用）。
 	aug.flow(trainX, trainY, batch_size=config.BATCH_SIZE),
 	validation_data=(testX, testY),
 	steps_per_epoch=trainX.shape[0] // config.BATCH_SIZE,
 	epochs=config.NUM_EPOCHS,
-	callbacks=[clr],
-	verbose=1)
+	callbacks=[clr], # keras.callbacks.Callback 实例的列表。在训练时调用的一系列回调函数
+	verbose=1) #verbose: 0, 1 或 2。日志显示模式。 0 = 安静模式, 1 = 进度条, 2 = 每轮一行。
 
 # evaluate the network and show a classification report
 print("[INFO] evaluating network...")
