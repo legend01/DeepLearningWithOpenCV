@@ -130,7 +130,7 @@ class LearningRateFinder:
 		# batch, enabling us to increase our learning rate as training
 		# progresses
 		callback = LambdaCallback(on_batch_end=lambda batch, logs:
-			self.on_batch_end(batch, logs))
+			self.on_batch_end(batch, logs)) 
 
 		# check to see if we are using a data iterator
 		if useGen:
