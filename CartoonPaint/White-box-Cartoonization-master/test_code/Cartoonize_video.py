@@ -13,6 +13,15 @@ from tqdm import tqdm
 
 import threading
 
+def original_image(image):
+    cv2.imshow("Original", image)
+    cv2.waitKey(0)
+    cv.destroyAllWindows()
+
+def output_image(image):
+    cv2.imshow("output", image)
+    cv2.waitKey(0)
+    cv.destroyAllWindows()
 
 def resize_crop(image):
     h, w, c = np.shape(image)
@@ -21,39 +30,74 @@ def resize_crop(image):
             h, w = int(720*h/w), 720
         else:
             h, w = 720, int(720*w/h)
-    image = cv2.resize(image, (w, h),
-                       interpolation=cv2.INTER_AREA)
+    print("[INFO]resize_crop:h: "+str(h)+" w: "+str(w)+" c: "+str(c))
+    image = cv2.resize(image, (w, h), interpolation=cv2.INTER_AREA)
     h, w = (h//8)*8, (w//8)*8
     image = image[:h, :w, :]
+
+    t1 = threading.Thread(target=original_image, args=(image, ))
+    t1.start()
+    # cv2.imshow("Original", image)
+    # cv2.waitKey(10)
+
     return image
-def read_image(image_path):
-    '''
-    note: TODO:读图片显示 
-    Author: HLLI8
-    Date: 2020-08-17 16:21:03
-    '''
-    print("read_image" + str(image_path))
-    image_path_t = image_path.replace('\\', '/')
-    print("image_path_t"+ str(image_path_t))
-    image = cv2.imread(image_path_t)
-    image = cv2.resize(image, (720, 720))
-    cv2.imshow("readimage", image)
-    cv2.waitKey(0)
-    cv.destroyAllWindows()
-def out_image(out_image_path):
-    '''
-    note: TODO:经过网络处理后图片显示 
-    Author: HLLI8
-    Date: 2020-08-17 16:21:37
-    '''    
-    print("read_image" + str(out_image_path))
-    out_image_path_t = out_image_path.replace('\\', '/')
-    print("out_image_path_t"+str(out_image_path_t))
-    image = cv2.imread(out_image_path_t)
-    # image = cv2.resize(image, (720, 720))
-    cv2.imshow("output", image)
-    cv2.waitKey(0)
-    cv.destroyAllWindows()
+
+def cartoonize_image(image, final_out, sess, input_photo):
+    image = resize_crop(image)
+    batch_image = image.astype(np.float32)/127.5 - 1
+    batch_image = np.expand_dims(batch_image, axis=0)
+    output = sess.run(final_out, feed_dict={input_photo: batch_image})
+    output = (np.squeeze(output)+1)*127.5
+    output = np.clip(output, 0, 255).astype(np.uint8)
+    return output
+
+def video_analysis(video_path, final_out, sess, input_photo, output_path = ""):
+    Count_frame = 0
+    print("[INFO]Video_analysis:"+str(video_path)+str("......."))
+    video_path_T = video_path.replace('\\', '/')
+    print("[INFO]Video_analysis transform : "+str(video_path_T)+str("......."))
+    
+    print("[INFO]output_path:"+str(output_path)+str("......."))
+    output_path = output_path.replace('\\', '/')
+    print("[INFO]output_path transform : "+str(output_path)+str("......."))
+
+    vid = cv2.VideoCapture(video_path_T)  # 使用OpenCV打开USB相机,读取视频
+    if not vid.isOpened():
+        raise IOError("Couldn't open webcam or video")
+    video_FourCC    = int(vid.get(cv2.CAP_PROP_FOURCC)) # 编码方式
+    video_fps       = vid.get(cv2.CAP_PROP_FPS) # 读取视频FPS值
+    video_size      = (int(vid.get(cv2.CAP_PROP_FRAME_WIDTH)), #读取视频大小
+                        int(vid.get(cv2.CAP_PROP_FRAME_HEIGHT)))
+    isOutput = True if output_path != "" else False
+    print("video_FourCC: "+str(video_FourCC)+"video_fps: "+str(video_fps)+"video_size: "+str(video_size))
+    if isOutput:
+        print("!!! TYPE:", type(output_path), type(video_FourCC), type(video_fps), type(video_size))
+        out = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*"mp4v"), video_fps, video_size)  #创建写入对象
+    success, image = vid.read()  # 读取视频
+    while success:
+        output = cartoonize_image(image, final_out, sess, input_photo)  # 开始对每帧进行检测
+        '''****************************************************************'''
+        # image = resize_crop(image)
+        # batch_image = image.astype(np.float32)/127.5 - 1
+        # batch_image = np.expand_dims(batch_image, axis=0)
+        # output = sess.run(final_out, feed_dict={input_photo: batch_image})
+        # output = (np.squeeze(output)+1)*127.5
+        # output = np.clip(output, 0, 255).astype(np.uint8)
+
+
+        t2 = threading.Thread(target=output_image, args=(output, ))
+        t2.start()
+        # cv2.imshow("output", output)
+        # cv2.waitKey(10)
+        '''****************************************************************'''
+        result = np.asarray(output)
+        if isOutput:
+            out.write(result)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+        success, image = vid.read()
+        Count_frame += 1
+        print("[INFO] Ongoing programing "+str(Count_frame)+".....")
 
 def cartoonize(load_folder, save_folder, model_path):
     input_photo = tf.placeholder(tf.float32, [1, None, None, 3])
@@ -72,31 +116,23 @@ def cartoonize(load_folder, save_folder, model_path):
     saver.restore(sess, tf.train.latest_checkpoint(model_path))
     name_list = os.listdir(load_folder)
     for name in tqdm(name_list):
-        try:
-            load_path = os.path.join(load_folder, name)
-            save_path = os.path.join(save_folder, name)
-            image = cv2.imread(load_path)
-            image = resize_crop(image)
-            t1 = threading.Thread(target=read_image, args=(load_path, ))
-            t1.start()
-            batch_image = image.astype(np.float32)/127.5 - 1
-            batch_image = np.expand_dims(batch_image, axis=0)
-            output = sess.run(final_out, feed_dict={input_photo: batch_image})
-            output = (np.squeeze(output)+1)*127.5
-            output = np.clip(output, 0, 255).astype(np.uint8)
-            cv2.imwrite(save_path, output)
-            t2 = threading.Thread(target=out_image, args=(save_path, ))
-            t2.start()
-        except:
-            print('cartoonize {} failed'.format(load_path))
+        print("[INFO] for circle name " + str(name) + "....")
+        # try:
+        load_path = os.path.join(load_folder, name)
+        save_path = os.path.join(save_folder, name)
+
+        video_analysis(load_path, final_out, sess, input_photo, save_path)
+        # except:
+        #     print('cartoonize {} failed'.format(load_path))
+    sess.close()
 
 
     
 
 if __name__ == '__main__':
     model_path = 'E:/PythonWorkSpace/DeepLearningWithOpenCV/CartoonPaint/White-box-Cartoonization-master/test_code/saved_models'
-    load_folder = 'E:/PythonWorkSpace/DeepLearningWithOpenCV/CartoonPaint/White-box-Cartoonization-master/test_code/demo_image'
-    save_folder = 'E:/PythonWorkSpace/DeepLearningWithOpenCV/CartoonPaint/White-box-Cartoonization-master/test_code/demo_image_output'
+    load_folder = 'E:/PythonWorkSpace/DeepLearningWithOpenCV/CartoonPaint/White-box-Cartoonization-master/test_code/demo_video'
+    save_folder = 'E:/PythonWorkSpace/DeepLearningWithOpenCV/CartoonPaint/White-box-Cartoonization-master/test_code/demo_video_output'
     if not os.path.exists(save_folder):
         os.mkdir(save_folder)
     cartoonize(load_folder, save_folder, model_path)

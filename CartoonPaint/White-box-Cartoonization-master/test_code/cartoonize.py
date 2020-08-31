@@ -4,7 +4,7 @@ version:
 Author: HLLI8
 Date: 2020-08-12 15:44:49
 LastEditors: HLLI8
-LastEditTime: 2020-08-17 17:35:38
+LastEditTime: 2020-08-31 14:46:07
 '''
 import sys
 sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
@@ -97,6 +97,7 @@ def cartoonize(load_folder, save_folder, model_path):
             t2.start()
         except:
             print('cartoonize {} failed'.format(load_path))
+    sess.close()
 
 
     
