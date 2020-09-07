@@ -69,7 +69,7 @@ def video_analysis(video_path, final_out, sess, input_photo, output_path = ""):
     video_size      = (int(vid.get(cv2.CAP_PROP_FRAME_WIDTH)), #读取视频大小
                         int(vid.get(cv2.CAP_PROP_FRAME_HEIGHT)))
     isOutput = True if output_path != "" else False
-    print("video_FourCC: "+str(video_FourCC)+"video_fps: "+str(video_fps)+"video_size: "+str(video_size))
+    print("video_FourCC: "+str(video_FourCC)+" video_fps: "+str(video_fps)+" video_size: "+str(video_size))
     if isOutput:
         print("!!! TYPE:", type(output_path), type(video_FourCC), type(video_fps), type(video_size))
         out = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*"mp4v"), video_fps, video_size)  #创建写入对象
@@ -96,8 +96,12 @@ def video_analysis(video_path, final_out, sess, input_photo, output_path = ""):
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
         success, image = vid.read()
+        if success == False: #结束退出机制
+            break
         Count_frame += 1
         print("[INFO] Ongoing programing "+str(Count_frame)+".....")
+    cv2.destroyAllWindows()
+    vid.release()
 
 def cartoonize(load_folder, save_folder, model_path):
     input_photo = tf.placeholder(tf.float32, [1, None, None, 3])
