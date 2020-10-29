@@ -1,12 +1,8 @@
-import sys
-sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
-import os
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' #只显示warning和Error
-
 import os
 import cv2
 import numpy as np
 import tensorflow as tf 
+tf.compat.v1.disable_eager_execution()
 import network
 import guided_filter
 from tqdm import tqdm
@@ -16,12 +12,12 @@ import threading
 def original_image(image):
     cv2.imshow("Original", image)
     cv2.waitKey(0)
-    cv.destroyAllWindows()
+    cv2.destroyAllWindows()
 
 def output_image(image):
     cv2.imshow("output", image)
     cv2.waitKey(0)
-    cv.destroyAllWindows()
+    cv2.destroyAllWindows()
 
 def resize_crop(image):
     h, w, c = np.shape(image)
@@ -104,19 +100,19 @@ def video_analysis(video_path, final_out, sess, input_photo, output_path = ""):
     vid.release()
 
 def cartoonize(load_folder, save_folder, model_path):
-    input_photo = tf.placeholder(tf.float32, [1, None, None, 3])
+    input_photo = tf.compat.v1.placeholder(tf.float32, [1, None, None, 3])
     network_out = network.unet_generator(input_photo)
     final_out = guided_filter.guided_filter(input_photo, network_out, r=1, eps=5e-3)
 
-    all_vars = tf.trainable_variables()
+    all_vars = tf.compat.v1.trainable_variables()
     gene_vars = [var for var in all_vars if 'generator' in var.name]
-    saver = tf.train.Saver(var_list=gene_vars)
+    saver = tf.compat.v1.train.Saver(var_list=gene_vars)
     
-    config = tf.ConfigProto()
+    config = tf.compat.v1.ConfigProto()
     config.gpu_options.allow_growth = True
-    sess = tf.Session(config=config)
+    sess = tf.compat.v1.Session(config=config)
 
-    sess.run(tf.global_variables_initializer())
+    sess.run(tf.compat.v1.global_variables_initializer())
     saver.restore(sess, tf.train.latest_checkpoint(model_path))
     name_list = os.listdir(load_folder)
     for name in tqdm(name_list):
@@ -134,9 +130,9 @@ def cartoonize(load_folder, save_folder, model_path):
     
 
 if __name__ == '__main__':
-    model_path = 'E:/PythonWorkSpace/DeepLearningWithOpenCV/CartoonPaint/White-box-Cartoonization-master/test_code/saved_models'
-    load_folder = 'E:/PythonWorkSpace/DeepLearningWithOpenCV/CartoonPaint/White-box-Cartoonization-master/test_code/demo_video'
-    save_folder = 'E:/PythonWorkSpace/DeepLearningWithOpenCV/CartoonPaint/White-box-Cartoonization-master/test_code/demo_video_output'
+    model_path = 'C:/WorkSpace/PythonWorkSpace/DeepLearningWithOpenCV/CartoonPaint/White-box-Cartoonization-master/test_code/saved_models'
+    load_folder = 'C:/WorkSpace/PythonWorkSpace/DeepLearningWithOpenCV/CartoonPaint/White-box-Cartoonization-master/test_code/demo_video'
+    save_folder = 'C:/WorkSpace/PythonWorkSpace/DeepLearningWithOpenCV/CartoonPaint/White-box-Cartoonization-master/test_code/demo_video_output'
     if not os.path.exists(save_folder):
         os.mkdir(save_folder)
     cartoonize(load_folder, save_folder, model_path)
