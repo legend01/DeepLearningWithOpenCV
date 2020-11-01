@@ -1,8 +1,10 @@
-import sys
-sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
-import os
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' #只显示warning和Error
-
+'''
+Description: YOLO4物体检测算法
+Author: HLLI8
+Date: 2020-10-21 15:00:22
+LastEditTime: 2020-11-01 16:11:52
+LastEditors: HLLI8
+'''
 import sys
 import argparse
 from yolo import YOLO, detect_video
