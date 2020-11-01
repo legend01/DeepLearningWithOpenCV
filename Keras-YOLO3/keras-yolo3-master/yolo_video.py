@@ -3,14 +3,9 @@
 @version: 
 @Author: HLLI8
 @Date: 2020-06-02 14:16:30
-@LastEditors: HLLI8
-@LastEditTime: 2020-06-02 14:49:25
+LastEditors: HLLI8
+LastEditTime: 2020-11-01 15:10:58
 '''
-import sys
-sys.path.append ("D:/ProgramFile/Anaconda/Lib/site-packages") 
-import os
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' #只显示warning和Error
-
 import sys
 import argparse
 from yolo import YOLO, detect_video

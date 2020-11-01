@@ -130,3 +130,5 @@ Keras_YOLO4/model_data/yolo4_weight.h5
 Keras_YOLO4/model_data/yolov4.weights
 Face_Landmask_Detection/Object_Tracking/Tracking_Caffer/TrackingAlgorithm/opencv-object-tracking/drone.mp4
 *.mp4
+CloneTempCode/FaceRecognize/
+Dlib/shape_predictor_81_face_landmarks/
